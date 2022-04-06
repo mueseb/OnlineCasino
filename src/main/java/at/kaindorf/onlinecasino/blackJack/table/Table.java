@@ -2,17 +2,16 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.blackJack;
+package at.kaindorf.onlinecasino.blackJack.table;
 
-import at.kaindorf.onlinecasino.beans.Dealer;
-import at.kaindorf.onlinecasino.beans.Deck;
-import at.kaindorf.onlinecasino.beans.Player;
+import at.kaindorf.onlinecasino.blackJack.player.Dealer;
+import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 
 import java.util.List;
 
 public class Table {
     private Dealer dealer;
-    private List<Player> players;
+    private List<BlackJackPlayer> players;
     private Deck deck;
 
     public Dealer getDealer() {
@@ -23,11 +22,11 @@ public class Table {
         this.dealer = dealer;
     }
 
-    public List<Player> getPlayers() {
+    public List<BlackJackPlayer> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<BlackJackPlayer> players) {
         this.players = players;
     }
 
@@ -39,7 +38,7 @@ public class Table {
         this.deck = deck;
     }
 
-    public Table(Dealer dealer, List<Player> players, Deck deck) {
+    public Table(Dealer dealer, List<BlackJackPlayer> players, Deck deck) {
         this.dealer = dealer;
         this.players = players;
         this.deck = deck;

@@ -2,7 +2,7 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.beans;
+package at.kaindorf.onlinecasino.blackJack.table;
 
 import at.kaindorf.onlinecasino.data.Rank;
 import at.kaindorf.onlinecasino.data.Suit;
@@ -32,6 +32,20 @@ public class Deck {
     public Stack<Card> getCardDeck()
     {
         return cardDeck;
+    }
+
+    public Card getCard()
+    {
+        return cardDeck.pop();
+    }
+
+    public List<Card> getCards(int cnt)
+    {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < cnt; i++) {
+            cards.add(cardDeck.pop());
+        }
+        return cards;
     }
 
 }

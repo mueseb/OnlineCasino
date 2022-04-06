@@ -4,6 +4,8 @@
 */
 package at.kaindorf.onlinecasino.beans;
 
+import at.kaindorf.onlinecasino.blackJack.table.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 

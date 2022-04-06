@@ -2,7 +2,7 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.beans;
+package at.kaindorf.onlinecasino.blackJack.table;
 
 public class Card {
     private String suit;
