@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Black-Jack login</title>
+    <script src="blLoginJS.js"></script>
+    <link rel="stylesheet" href="bjLoginStyle.css">
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <label for="firstname">Vorname:</label>
+            <input type="text" id="firstname">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="lastname">Nachname:</label>
+            <input type="text" id="lastname">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="mail">E-Mail:</label>
+            <input type="email" id="mail">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="pwd">Passwort:</label>
+            <input type="password" id="pwd">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="pwdR">Passwort wiederholen:</label>
+            <input type="password" id="pwdR">
+        </td>
+    </tr>
+</table>
+
+<button onclick="CheckInput(firstname.value ,lastname.value, mail.value, pwd.value, pwdR.value)">Creat user</button>
+
+</body>
+</html>

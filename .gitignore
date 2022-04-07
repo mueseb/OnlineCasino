@@ -37,3 +37,5 @@
 /target/classes/at/kaindorf/onlinecasino/data/Rank.class
 /target/classes/at/kaindorf/onlinecasino/data/Suit.class
 /target/classes/at/kaindorf/onlinecasino/blackJack/Table.class
+/.idea/libraries/
+/target/
