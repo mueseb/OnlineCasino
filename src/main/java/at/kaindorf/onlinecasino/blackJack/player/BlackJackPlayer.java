@@ -4,12 +4,13 @@
 */
 package at.kaindorf.onlinecasino.blackJack.player;
 
-import at.kaindorf.onlinecasino.beans.Hand;
+import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
 public class BlackJackPlayer extends Player{
     private int turn;
     private int bet;
     private boolean stand;
+
 
     public int getTurn() {
         return turn;

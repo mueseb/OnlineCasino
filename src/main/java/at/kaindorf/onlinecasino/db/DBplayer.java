@@ -2,9 +2,10 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.beans;
+package at.kaindorf.onlinecasino.db;
 
-public class DBplayer {
+public class
+DBplayer {
     private final String usrname;
     private final int usrpwd;
     private int credit;

@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginData {
     private String name, pwd;
+
+    @Override
+    public String toString() {
+        return name + ";" + pwd;
+    }
 }

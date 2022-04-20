@@ -1,6 +1,6 @@
 package at.kaindorf.onlinecasino.blackJack.player;
 
-import at.kaindorf.onlinecasino.beans.Hand;
+import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
 public class Player {
     private Hand hand;

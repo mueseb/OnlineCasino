@@ -2,9 +2,7 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.beans;
-
-import at.kaindorf.onlinecasino.blackJack.table.Card;
+package at.kaindorf.onlinecasino.blackJack.table;
 
 import java.util.ArrayList;
 import java.util.List;

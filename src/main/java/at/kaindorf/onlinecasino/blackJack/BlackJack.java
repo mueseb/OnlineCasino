@@ -84,7 +84,7 @@ public class BlackJack {
     }
 
     //Checks if all Players are Standing
-    public boolean allPlayerStand(List<BlackJackPlayer> players)
+    public boolean allPlayerStandCheck(List<BlackJackPlayer> players)
     {
         boolean allStanding = true;
         for (BlackJackPlayer player:players)
@@ -135,7 +135,7 @@ public class BlackJack {
         giveStarterCards(table);
         System.out.println("Successful gave starterCards");
 
-        while(!allPlayerStand(players))
+        while(!allPlayerStandCheck(players))
         {
             for (BlackJackPlayer player:table.getPlayers())
             {
