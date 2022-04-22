@@ -36,7 +36,6 @@ public class BlackJack {
     public void giveStarterCards(Table table)
     {
         table.getDealer().getHand().addCardsToHand(table.getDeck().getCards(2));
-
         for (BlackJackPlayer player: table.getPlayers()) {
             player.getHand().addCardsToHand(table.getDeck().getCards(2));
         }
