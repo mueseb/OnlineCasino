@@ -1,4 +1,4 @@
-package database;
+package at.kaindorf.onlinecasino.db.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +20,7 @@ public class DB_Database {
         DB_USER = DB_Properties.getProperty("db_user");
         DB_PASSWORD = DB_Properties.getProperty("db_password");
 
-        Class.forName(DB_DRIVER);
+        //Class.forName(DB_DRIVER);
     }
 
     public void connect() throws SQLException {

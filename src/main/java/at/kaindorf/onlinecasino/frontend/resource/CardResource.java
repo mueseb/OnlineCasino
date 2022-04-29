@@ -15,7 +15,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cards")
+//@Path("/cards")
 public class CardResource {
 
     Dealer dealer;
@@ -24,33 +24,30 @@ public class CardResource {
     Table table;
     BlackJack blackJack;
 
-    @GET
-    public Response getStarterCards() {
+    public void getStarterCards() {
         deck = new Deck();
         dealer.getHand().addCardsToHand(deck.getCards(2));
         blackJackPlayer.getHand().addCardsToHand(deck.getCards(2));
         //table = new Table()
         //blackJack = new BlackJack();
-        return Response.ok().build();
+        //return Response.ok().build();
     }
 
-    @GET
-    public Response getDealerCard() {
+    public void getDealerCard() {
 //        if (loginData.getName().equals("admin") && loginData.getPwd().equals("admin")) {
 //            return Response.ok().header("Authorization", creatJWT(loginData.getName())).build();
 //        }
 //        return Response.status(Response.Status.UNAUTHORIZED).build();
 
-        return Response.ok().build();
+        //return Response.ok().build();
     }
 
-    @GET
-    public Response getPlayerCard() {
+    public void getPlayerCard() {
 //        if (loginData.getName().equals("admin") && loginData.getPwd().equals("admin")) {
 //            return Response.ok().header("Authorization", creatJWT(loginData.getName())).build();
 //        }
 //        return Response.status(Response.Status.UNAUTHORIZED).build();
 
-        return Response.ok().build();
+        //return Response.ok().build();
     }
 }

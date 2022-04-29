@@ -1,4 +1,4 @@
-package database;
+package at.kaindorf.onlinecasino.db.database;
 
 public enum DB_PrepStat {
     insertStudentStat("INSERT INTO student (classid, catno, firstname, lastname, gender, dateofbirthdate) VALUES(?, ?, ?, ?, ?, ?)"),
