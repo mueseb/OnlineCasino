@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class LoginData {
     private String username, pwd;
 }

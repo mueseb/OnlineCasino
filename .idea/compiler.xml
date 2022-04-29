@@ -8,10 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="OnlineCasino" />
+        <module name="OnlineCasino-stable" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="OnlineCasino" target="1.8" />
+      <module name="OnlineCasino-stable" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

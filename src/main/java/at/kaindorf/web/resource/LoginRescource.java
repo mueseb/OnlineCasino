@@ -1,6 +1,6 @@
-package com.example.pos_project.resource;
+package at.kaindorf.web.resource;
 
-import com.example.pos_project.beans.LoginData;
+import at.kaindorf.web.beans.LoginData;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import jakarta.ws.rs.POST;
@@ -25,9 +25,15 @@ public class LoginRescource {
 
     @POST
     public Response login(LoginData loginData) {
-        if (loginData.getName().equals("admin") && loginData.getPwd().equals("admin")) {
-            return Response.ok().header("Authorization", creatJWT(loginData.getName())).build();
+        if (loginData.getUsername().equals("admin") && loginData.getPwd().equals("admin")) {
+            return Response.ok().header("Authorization", creatJWT(loginData.getUsername())).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
+    }
+
+    @POST
+    public Response creatUser(LoginData loginData){
+        //todo: check loginDate with DB
+        return Response.ok().build();
     }
 }

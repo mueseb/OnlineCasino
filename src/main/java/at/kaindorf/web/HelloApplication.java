@@ -1,4 +1,4 @@
-package com.example.pos_project;
+package at.kaindorf.web;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
