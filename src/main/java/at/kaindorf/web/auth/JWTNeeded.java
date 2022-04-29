@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.frontend.auth;
+package at.kaindorf.web.auth;
 
 import jakarta.ws.rs.NameBinding;
 

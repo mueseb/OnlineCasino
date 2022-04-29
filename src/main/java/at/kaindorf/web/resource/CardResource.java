@@ -2,14 +2,13 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.frontend.resource;
+package at.kaindorf.web.resource;
 
 import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.player.Dealer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
-import at.kaindorf.onlinecasino.frontend.beans.LoginData;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;

@@ -1,8 +1,8 @@
-package at.kaindorf.onlinecasino.frontend.auth;
+package at.kaindorf.web.auth;
 
 
 
-import at.kaindorf.onlinecasino.frontend.resource.LoginRescource;
+import at.kaindorf.web.resource.LoginRescource;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.crypto.MACVerifier;
 import jakarta.annotation.Priority;

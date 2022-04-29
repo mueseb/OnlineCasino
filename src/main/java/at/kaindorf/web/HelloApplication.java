@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino;
+package at.kaindorf.web;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

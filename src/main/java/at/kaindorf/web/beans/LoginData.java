@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.frontend.beans;
+package at.kaindorf.web.beans;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

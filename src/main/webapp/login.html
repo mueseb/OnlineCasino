@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="login_createUser_JS.js"></script>
+    <link rel="stylesheet" href="loginStyle.css">
+</head>
+<body>
+<div class="creatUserBG"></div>
+<div class="creatUserContent">
+    <div class="flex-container">
+        <div>
+            <table>
+                <th>Ｌｏｇｉｎ　運ル安</th>
+                <tr>
+                    <td>
+                        <div class="inputLogin">
+                            <input id="userInput" type="text" placeholder="Username">
+                            <input id="pwdInput" type="password" placeholder="Password">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="loginButton" onclick="login(userInput.value, pwdInput.value)">Login</button>
+                        <button class="loginButton" onclick="checkInput(userInput.value, pwdInput.value)">Creat new
+                            user
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h1 id="errorText" class="glow"></h1>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
