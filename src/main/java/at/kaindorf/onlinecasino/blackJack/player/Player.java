@@ -2,13 +2,15 @@ package at.kaindorf.onlinecasino.blackJack.player;
 
 import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
+
+//Generic Player
 public class Player {
     private Hand hand;
-    private boolean win;
+    private boolean canWin;
 
     public Player(Hand hand) {
         this.hand = hand;
-        this.win = true;
+        this.canWin = true;
     }
 
     public Hand getHand() {
@@ -19,11 +21,11 @@ public class Player {
         this.hand = hand;
     }
 
-    public boolean isWin() {
-        return win;
+    public boolean isCanWin() {
+        return canWin;
     }
 
-    public void setWin(boolean win) {
-        this.win = win;
+    public void setCanWin(boolean canWin) {
+        this.canWin = canWin;
     }
 }

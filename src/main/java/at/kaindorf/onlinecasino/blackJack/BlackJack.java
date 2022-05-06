@@ -112,14 +112,14 @@ public class BlackJack {
     public void winnerCheck(Table table)
     {
         //TODO: Check for Winner
-        if(table.getDealer().isWin())
+        if(table.getDealer().isCanWin())
         {
             for (BlackJackPlayer player: table.getPlayers()) {
-                if(player.isWin())
+                if(player.isCanWin())
                 {
                     if(player.getHand().getHandTotal()<table.getDealer().getHand().getHandTotal())
                     {
-                        player.setWin(false);
+                        player.setCanWin(false);
                     }
                 }
             }

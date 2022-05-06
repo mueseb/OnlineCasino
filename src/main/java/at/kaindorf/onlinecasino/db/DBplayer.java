@@ -4,49 +4,40 @@
 */
 package at.kaindorf.onlinecasino.db;
 
-public class
-DBplayer {
+import lombok.Data;
+
+@Data
+public class DBplayer {
+    private final int id;
     private final String usrname;
-    private final int usrpwd;
+    private final String usrpwd;
     private int credit;
 
-    public boolean checkPassword(String pwd)
-    {
-        if(usrpwd == pwd.hashCode())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+//    public boolean checkPassword(String pwd)
+//    {
+////        if(usrpwd == pwd.hashCode())
+////        {
+////            return true;
+////        }
+////        else
+////        {
+////            return false;
+////        }
+//    }
 
-    public DBplayer(String usrname, int usrpwd, int credit) {
+    public DBplayer(int id, String usrname, String usrpwd, int credit) {
+        this.id = id;
         this.usrname = usrname;
         this.usrpwd = usrpwd;
         this.credit = credit;
     }
 
-    public DBplayer(String usrname, String usrpwd) {
-        this.usrname = usrname;
-        this.usrpwd = usrpwd.hashCode();
-        this.credit = 100;
-    }
+//    public DBplayer(String usrname, String usrpwd, int id, String usrpwd1) {
+//        this.usrname = usrname;
+//        this.id = id;
+//        this.usrpwd = usrpwd1;
+////        this.usrpwd = usrpwd.hashCode();
+//        this.credit = 100;
+//    }
 
-    public String getUsrname() {
-        return usrname;
-    }
-
-    public int getUsrpwd() {
-        return usrpwd;
-    }
-
-    public int getCredit() {
-        return credit;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
 }

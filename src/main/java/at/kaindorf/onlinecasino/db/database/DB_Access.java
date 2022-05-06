@@ -8,14 +8,7 @@ public class DB_Access {
     private static DB_Access instance;
     private final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private DB_Database database = null;
-
-//    private PreparedStatement insertStudentStat;
-//    private PreparedStatement insesrtGradeStat;
-//    private PreparedStatement getStudentOfClassIdStat;
-//    private PreparedStatement getIdGradeStat;
-//    private PreparedStatement getNameStat;
-//    private PreparedStatement updateCatNo;
-
+    private Connection connection;
 
     public DB_Access() throws ClassNotFoundException {
         this.database = new DB_Database();
@@ -36,113 +29,32 @@ public class DB_Access {
         database.disconnect();
     }
 
-    public static void main(String[] args) {
-//        DB_Access db = null;
-//        try {
-//            db = new DB_Access();
-//            db.connect();
-//        } catch (ClassNotFoundException | SQLException e) {
+    public DB_Database getDatabase() {
+        return database;
+    }
+
+
+    //        try {
+//            DB_Access db_access = new DB_Access();
+//            Class.forName("org.postgresql.Driver");
+////            Connection db = DriverManager.getConnection(url, username, password);
+//            db_access.connect();
+//            String sqlString = "SELECT * FROM public.\"User\";";
+////
+////            statement = db_access.createStatement();
+////            ResultSet rs = statement.executeQuery(sqlString);
+//            while(rs.next()) {
+//                //System.out.println(rs.getInt(1));
+//                System.out.println(rs.getString("id"));
+//                System.out.println(rs.getString("name"));
+//            }
+//            statement.close();
+//            db_access.close();
+//        } catch (SQLException | ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
 
-        String url="jdbc:postgresql://107.20.254.204:5432/CasinoDB";
-        String username="postgres";
-        String password="2002";
-        try {
-            Class.forName("org.postgresql.Driver");
-            Connection db = DriverManager.getConnection(url, username, password);
-            String sqlString = "SELECT * FROM public.\"User\";";
-            Statement statement = null;
-            statement = db.createStatement();
-            ResultSet rs = statement.executeQuery(sqlString);
-            while(rs.next()) {
-                //System.out.println(rs.getInt(1));
-                System.out.println(rs.getString("id"));
-                System.out.println(rs.getString("name"));
-            }
-            statement.close();
-            db.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-//    public void importToDB() throws SQLException, IOException {
-//        String sqlString = "DELETE FROM student;";
-//        Statement statement = database.getStatement();
-//        statement.executeUpdate(sqlString);
-//
-//        sqlString = "DELETE FROM grade";
-//        statement.executeUpdate(sqlString);
-//
-//        Path path = Paths.get(System.getProperty("user.dir"), "src", "res", "Studentlist_3xHIF.csv");
-//        List<String> data = Files.readAllLines(path);
-//
-//        List<Student> students = new ArrayList<>();
-//        Map<String, Integer> grades = new TreeMap<>();
-//
-//        for (String line : data) {
-//            String[] tokens = line.split(";");
-//
-//            if (!grades.containsKey(tokens[0])) {
-//                grades.put(tokens[0], grades.size());
-//            }
-//            students.add(new Student(0, grades.get(tokens[0]), 0, tokens[2], tokens[1], tokens[3].charAt(0), LocalDate.parse(tokens[4], DTF)));
-//        }
-//
-//        for (String grade : grades.keySet()) {
-//            insertGrade(grade);
-//        }
-//
-//        sqlString = "SELECT * FROM grade;";
-//        ResultSet rs = statement.executeQuery(sqlString);
-//
-//        while (rs.next()) {
-//            int newID = rs.getInt("classid");
-//            int oldID = grades.get(rs.getString("classname"));
-//
-//            for (Student student : students) {
-//                if (oldID == student.getClassid()) {
-//                    student.setClassid(newID);
-//                }
-//            }
-//        }
-//        database.releaseStatement(statement);
-//
-//        int catno = 1;
-//        int classid = students.get(0).getClassid();
-//
-//        for (Student student : students) {
-//            if (classid != student.getClassid()) {
-//                catno = 1;
-//                classid = student.getClassid();
-//            }
-//            student.setCatno(catno);
-//            catno++;
-//            insertStudent(student);
-//        }
-//
-//    }
-
-//    public void exportToCSV() throws IOException, SQLException {
-//        Path path = Paths.get(System.getProperty("user.dir"), "src", "res", "Studentlist_3xHIF.csv");
-//        path.toFile().delete();
-//
-//        FileWriter fw = new FileWriter(path.toFile());
-//        List<Student> students = getStudents();
-//        fw.append("Klasse;Familienname;Vorname;Geschlecht;Geburtsdatum");
-//
-//        for (Student student : students)
-//        {
-//            fw.append(getGradeName(student.getClassid()));
-//            fw.append(student.toString());
-//        }
-//        fw.flush();
-//        fw.close();
-//    }
-
-//    public void insertStudent(Student student) throws SQLException {
+//    public void insertUser(Student student) throws SQLException {
 //        if (insertStudentStat == null) {
 //            insertStudentStat = database.getConnection().prepareStatement(database.DB_PrepStat.insertStudentStat.sqlValue);
 //        }

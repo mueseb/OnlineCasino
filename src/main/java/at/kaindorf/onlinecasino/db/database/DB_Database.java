@@ -19,8 +19,7 @@ public class DB_Database {
         DB_URL = DB_Properties.getProperty("db_url");
         DB_USER = DB_Properties.getProperty("db_user");
         DB_PASSWORD = DB_Properties.getProperty("db_password");
-
-        //Class.forName(DB_DRIVER);
+        Class.forName(DB_DRIVER);
     }
 
     public void connect() throws SQLException {
