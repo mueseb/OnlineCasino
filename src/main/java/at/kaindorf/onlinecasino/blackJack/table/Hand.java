@@ -45,7 +45,7 @@ public class Hand {
         return hand;
     }
 
-    public List<Card> getObscuredHand()
+    public List<Card> getDealerHand()
     {
         List<Card> obscHand = hand;
         obscHand.remove(0);

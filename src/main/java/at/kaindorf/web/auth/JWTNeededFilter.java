@@ -1,7 +1,5 @@
 package at.kaindorf.web.auth;
 
-
-
 import at.kaindorf.web.resource.LoginRescource;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.crypto.MACVerifier;

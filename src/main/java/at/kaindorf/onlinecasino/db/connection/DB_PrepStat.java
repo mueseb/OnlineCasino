@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.db.database;
+package at.kaindorf.onlinecasino.db.connection;
 
 
 public enum DB_PrepStat {

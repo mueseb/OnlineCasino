@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.db.database;
+package at.kaindorf.onlinecasino.db.connection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

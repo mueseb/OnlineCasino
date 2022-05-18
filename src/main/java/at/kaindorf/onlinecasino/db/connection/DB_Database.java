@@ -1,6 +1,4 @@
-package at.kaindorf.onlinecasino.db.database;
-
-import org.postgresql.Driver;
+package at.kaindorf.onlinecasino.db.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,21 +20,16 @@ public class DB_Database {
 //        DB_USER = DB_Properties.getProperty("db_user");
 //        DB_PASSWORD = DB_Properties.getProperty("db_password");
         initURL();
-        System.out.println("DB_Database");
-//        try {
-//            DriverManager.registerDriver();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         Class.forName(DB_DRIVER);
     }
 
     public void initURL()
     {
-        DB_DRIVER = "org.postgresql.Driver";
-        DB_URL = "jdbc:postgresql://107.20.254.204:5432/CasinoDB";
-        DB_USER = "postgres";
-        DB_PASSWORD = "2002";
+        DB_Properties dbProperties = new DB_Properties();
+        DB_DRIVER = dbProperties.getDb_driver();
+        DB_URL = dbProperties.getDb_url();
+        DB_USER = dbProperties.getDb_user();
+        DB_PASSWORD = dbProperties.getDb_password();
     }
 
     public void connect() throws SQLException {
@@ -63,9 +56,9 @@ public class DB_Database {
     }
 
     public Statement getStatement() throws SQLException {
-//        if (connection != null || cachedConnection != null) {
-//            throw new IllegalStateException("not connected to database");
-//        }
+        if (connection != null || cachedConnection != null) {
+            throw new IllegalStateException("not connected to database");
+        }
         return cachedConnection.getStatement();
     }
 

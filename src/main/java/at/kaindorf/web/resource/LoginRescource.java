@@ -3,7 +3,6 @@ package at.kaindorf.web.resource;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
 import at.kaindorf.onlinecasino.db.DBplayer;
 import at.kaindorf.web.beans.LoginData;
-import at.kaindorf.web.bl.WebDBAccess;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import jakarta.ws.rs.POST;
@@ -11,13 +10,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 @Path("/login")
 public class LoginRescource {
     public static final String SECRET = "_this_secret_is_not_long_enough_";
-    public WebDBAccess instance = WebDBAccess.getInstance();
     public BlackjackDB blackJackDB;
 
     public void setDatabase() throws SQLException, ClassNotFoundException {
@@ -45,13 +42,8 @@ public class LoginRescource {
         DBplayer player;
         player = new DBplayer(loginData.getUsername(),loginData.getPwd());
         try {
-            System.out.println(DBconnecter.getuserByID(0));
-            System.out.println(DBconnecter.getuserByID(0));
-            System.out.println(DBconnecter.getuserByID(0));
-            System.out.println(DBconnecter.getuserByID(0));
-            System.out.println(DBconnecter.getuserByID(0));
             BlackjackDB blackJackDB = BlackjackDB.getInstance();
-            DBplayer userByID = blackJackDB.getUserByID(0);
+            DBplayer userByID = blackJackDB.getUserDataByID(0);
             System.out.print(userByID.getUsrname());
             if (blackJackDB.checkIfUserExists(player.getUsrname())) {
                 if(blackJackDB.checkUserPassword(player.getUsrname(),player.getUsrpwd()))

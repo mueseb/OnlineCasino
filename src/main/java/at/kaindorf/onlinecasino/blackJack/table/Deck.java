@@ -4,8 +4,8 @@
 */
 package at.kaindorf.onlinecasino.blackJack.table;
 
-import at.kaindorf.onlinecasino.data.Rank;
-import at.kaindorf.onlinecasino.data.Suit;
+import at.kaindorf.onlinecasino.blackJack.data.Rank;
+import at.kaindorf.onlinecasino.blackJack.data.Suit;
 
 import java.util.*;
 import java.util.stream.Collectors;

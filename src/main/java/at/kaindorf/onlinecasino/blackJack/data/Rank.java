@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.data;
+package at.kaindorf.onlinecasino.blackJack.data;
 
 public enum Rank {
     Ace,
