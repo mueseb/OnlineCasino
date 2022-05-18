@@ -51,7 +51,7 @@ function createNewUser(username, pwd){
         'username': username,
         'pwd': pwd
     }
-    fetch('./api/creatUser', {
+    fetch('./api/login/createUser', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newUserDate)
@@ -65,6 +65,4 @@ function createNewUser(username, pwd){
                 document.getElementById("errorText").innerText = "";
             }
         })
-
-    login(username, pwd);
 }

@@ -11,7 +11,7 @@ public class PlayerDB {
     private String name;
     private String pwd;
     private String balance;
-    private List<Game> games = new ArrayList<>();
+    private List<DBgame> DBgames = new ArrayList<>();
 
 
 }

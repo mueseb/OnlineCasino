@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 public class DBplayer {
-    private final int id;
+    private  int id;
     private final String usrname;
-    private final String usrpwd;
+    private  String usrpwd;
     private int credit;
 
 //    public boolean checkPassword(String pwd)
@@ -25,8 +25,22 @@ public class DBplayer {
 ////        }
 //    }
 
+
     public DBplayer(int id, String usrname, String usrpwd, int credit) {
         this.id = id;
+        this.usrname = usrname;
+        this.usrpwd = usrpwd;
+        this.credit = credit;
+    }
+
+    public DBplayer(int id, String usrname, int credit) {
+        this.id = id;
+        this.usrname = usrname;
+        this.credit = credit;
+    }
+
+    public DBplayer(/*int id, */String usrname, String usrpwd/*, int credit*/) {
+//        this.id = id;
         this.usrname = usrname;
         this.usrpwd = usrpwd;
         this.credit = credit;

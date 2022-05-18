@@ -1,5 +1,7 @@
 package at.kaindorf.web.resource;
 
+import at.kaindorf.onlinecasino.db.BlackjackDB;
+import at.kaindorf.onlinecasino.db.DBplayer;
 import at.kaindorf.web.beans.LoginData;
 import at.kaindorf.web.bl.WebDBAccess;
 import com.nimbusds.jose.*;
@@ -9,10 +11,20 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 @Path("/login")
 public class LoginRescource {
     public static final String SECRET = "_this_secret_is_not_long_enough_";
     public WebDBAccess instance = WebDBAccess.getInstance();
+    public BlackjackDB blackJackDB;
+
+    public void setDatabase() throws SQLException, ClassNotFoundException {
+        if(blackJackDB == null){
+            blackJackDB = BlackjackDB.getInstance();
+        }
+    }
 
     public String creatJWT(String name) {
         JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), new Payload(name));
@@ -29,28 +41,56 @@ public class LoginRescource {
     @POST
     @Produces
     public Response login(LoginData loginData) {
-        loginData.setPwd("" + hashPassword(loginData));
-        if(instance.checkPlayerDB(loginData))
-            return Response.ok().header("Authorization", creatJWT(loginData.getUsername())).build();
+        //loginData.setPwd("" + hashPassword(loginData));
+        DBplayer player;
+        player = new DBplayer(loginData.getUsername(),loginData.getPwd());
+        try {
+            System.out.println(DBconnecter.getuserByID(0));
+            System.out.println(DBconnecter.getuserByID(0));
+            System.out.println(DBconnecter.getuserByID(0));
+            System.out.println(DBconnecter.getuserByID(0));
+            System.out.println(DBconnecter.getuserByID(0));
+            BlackjackDB blackJackDB = BlackjackDB.getInstance();
+            DBplayer userByID = blackJackDB.getUserByID(0);
+            System.out.print(userByID.getUsrname());
+            if (blackJackDB.checkIfUserExists(player.getUsrname())) {
+                if(blackJackDB.checkUserPassword(player.getUsrname(),player.getUsrpwd()))
+                {
+                    return Response.ok().header("Authorization", creatJWT(loginData.getUsername())).build();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 
-//    @POST
-//    @Produces
-//    public Response creatUser(LoginData loginData){
-//        //loginData = username, password
-//        loginData.setPwd("" + hashPassword(loginData));
-//        if(!instance.checkNewPlayer(loginData)){
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//        instance.addPlayer(loginData);
-//        return Response.ok().build();
-//    }
+    @POST
+    @Path("/createUser")
+    public Response creatUser(LoginData loginData) {
+//        loginData.setPwd(hashPWD(loginData));
+        DBplayer player;
+        player = new DBplayer(loginData.getUsername(),loginData.getPwd());
+        try {
+            BlackjackDB blackJackDB = BlackjackDB.getInstance();
+            if (blackJackDB.insertUser(player)) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.CONFLICT).build();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
 
     //Hashes the password
-    private int hashPassword(LoginData loginData){
-        String preHash = "" + loginData.getUsername() + loginData.getPwd();
-        return preHash.hashCode();
+    public String hashPWD(LoginData loginData) {
+        String plainPWD = loginData.getPwd() + loginData.getUsername();
+        String hashedPWD = plainPWD.hashCode() + "";
+
+        return hashedPWD;
     }
 
 }

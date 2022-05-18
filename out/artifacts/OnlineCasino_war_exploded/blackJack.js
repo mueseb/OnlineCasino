@@ -51,3 +51,22 @@ function checkDealerCards()
 }
 
 
+
+
+//getplayercards(num)
+//getdealercards(num)
+//getplayerbalance info
+//startgame send bet ->getplayercards -> getdealercards
+//
+
+//stand -> getWinner
+//hit -> getPlayerCards /-> dealerWin
+
+//getWinner -> dealerTurn -> getalldealerCards -> CardCount //savesStats ->write to database -> getplayerbalance
+
+
+
+
+
+
+
