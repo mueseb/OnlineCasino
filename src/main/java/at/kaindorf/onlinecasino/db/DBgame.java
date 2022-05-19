@@ -12,7 +12,8 @@ import java.util.Date;
 //TODO rework
 @Data
 public class DBgame {
-    private int id;
+    private int gameID;
+    private int playerID;
     private int bet;
     private Hand dealerHand;
     private Hand playerHand;

@@ -27,8 +27,6 @@ public class DB_Properties {
         try {
             FileInputStream fis = new FileInputStream(path.toFile());
             dbProperties.load(fis);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -94,7 +94,9 @@ public class BlackjackDB {
         checkUserPassword.setString(1,name);
         ResultSet rs = checkUserPassword.executeQuery();
         rs.next();
-        if(rs.getString("password").equals(pwd))
+        String password = pwd+name;
+        password = password.hashCode()+"";
+        if(rs.getString("password").equals(password))
         {
             return true;
         }
@@ -111,8 +113,10 @@ public class BlackjackDB {
         {
             return false;
         }
+        String password = user.getUsrpwd()+user.getUsrname();
+        password=password.hashCode()+"";
         insertUser.setString(1,user.getUsrname());
-        insertUser.setString(2,user.getUsrpwd());
+        insertUser.setString(2,password);
         int rs = insertUser.executeUpdate();
         return rs == 1;
     }
@@ -136,7 +140,7 @@ public class BlackjackDB {
         {
             insertGameByID = connection.prepareStatement(DB_PrepStat.insertGameByID.sqlValue);
         }
-        insertGameByID.setInt(1,game.getId());
+        insertGameByID.setInt(1,game.getPlayerID());
         return true;
     }
 

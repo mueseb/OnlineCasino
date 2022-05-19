@@ -4,12 +4,19 @@
 */
 package at.kaindorf.onlinecasino.db;
 
+import at.kaindorf.onlinecasino.blackJack.player.Player;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Data
+@NoArgsConstructor
 public class DBplayer {
     private  int id;
-    private final String usrname;
+    private String usrname;
     private  String usrpwd;
     private int credit;
 
@@ -25,6 +32,11 @@ public class DBplayer {
 ////        }
 //    }
 
+    public String makePassword(DBplayer player) {
+        String password="";
+        password+=player.getUsrpwd()+player.getUsrname();
+        return password.hashCode()+"";
+    }
 
     public DBplayer(int id, String usrname, String usrpwd, int credit) {
         this.id = id;
@@ -54,4 +66,10 @@ public class DBplayer {
 //        this.credit = 100;
 //    }
 
+
+    public static void main(String[] args) {
+        String pwd = "adminadmin";
+        pwd = pwd.hashCode()+"";
+        System.out.println(pwd);
+    }
 }
