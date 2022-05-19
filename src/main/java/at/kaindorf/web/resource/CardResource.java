@@ -9,10 +9,6 @@ import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.player.Dealer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.core.Response;
 
 //@Path("/cards")
 public class CardResource {
@@ -25,8 +21,8 @@ public class CardResource {
 
     public void getStarterCards() {
         deck = new Deck();
-        dealer.getHand().addCardsToHand(deck.getCards(2));
-        blackJackPlayer.getHand().addCardsToHand(deck.getCards(2));
+        dealer.getHand().addCardsToHand(deck.getCardsFromDeck(2));
+        blackJackPlayer.getHand().addCardsToHand(deck.getCardsFromDeck(2));
         //table = new Table()
         //blackJack = new BlackJack();
         //return Response.ok().build();

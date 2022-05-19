@@ -22,10 +22,17 @@ public class BlackJack {
         Dealer dealer = new Dealer();
         List<BlackJackPlayer> players = new ArrayList<>();
         Deck deck = new Deck();
-
+        System.out.println(deck.getCardDeck());
         BlackJack blackJack = new BlackJack();
         try {
             blackJack.startGame(dealer,players,deck);
+            if(players.get(0).isCanWin())
+            {
+                System.out.println("Player Win");
+            }
+            else{
+                System.out.println("Dealer Win");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,10 +42,12 @@ public class BlackJack {
     //Gives the Dealer and Every Player 2 cards
     public void giveStarterCards(Table table)
     {
-        table.getDealer().getHand().addCardsToHand(table.getDeck().getCards(2));
+        System.out.println("start givingStarterCards");
+        table.getDealer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         for (BlackJackPlayer player: table.getPlayers()) {
-            player.getHand().addCardsToHand(table.getDeck().getCards(2));
+            player.getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         }
+        System.out.println("finished givingStarterCards");
     }
 
     //PlayerTurn
@@ -46,6 +55,7 @@ public class BlackJack {
     //Players lose on Bust (>21)
     //Ace counts as 11 or 1 depending on choice except on Bust (always 1)
     public void playerTurn(BlackJackPlayer player, Deck deck) throws IOException {
+        System.out.println("start playerTurn");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if(!player.isStand())
         {
@@ -55,7 +65,7 @@ public class BlackJack {
                 int option = Integer.parseInt(reader.readLine());
                 switch (option)
                 {
-                    case 1: player.getHand().addCardToHand(deck.getCard());break;
+                    case 1: player.getHand().addCardToHand(deck.getCardFromDeck());break;
                     case 2: player.setStand(true);break;
                     case 3: player.setBet(player.getBet()*2); break;
                 }
@@ -66,7 +76,7 @@ public class BlackJack {
                 int option = Integer.parseInt(reader.readLine());
                 switch (option)
                 {
-                    case 1: player.getHand().addCardToHand(deck.getCard());break;
+                    case 1: player.getHand().addCardToHand(deck.getCardFromDeck());break;
                     case 2: player.setStand(true);break;
                 }
             }
@@ -80,11 +90,13 @@ public class BlackJack {
             return;
         }
         player.addTurn();
+        System.out.println("finished playerTurn");
     }
 
     //Checks if all Players are Standing
     public boolean allPlayerStandCheck(List<BlackJackPlayer> players)
     {
+        System.out.println("Stand check");
         boolean allStanding = true;
         for (BlackJackPlayer player:players)
         {
@@ -93,6 +105,7 @@ public class BlackJack {
                 break;
             }
         }
+        System.out.println("Stand check= " + allStanding);
         return allStanding;
     }
 
@@ -101,16 +114,19 @@ public class BlackJack {
     //Ace counts always as 11 except on bust
     public void dealerTurn(Dealer dealer, Deck deck)
     {
+        System.out.println("start dealerTurn");
         //TODO: Check if Bust
         //TODO: Check Aces on Bust
         while(dealer.getHand().getHandTotal()<17)
         {
-            dealer.getHand().addCardToHand(deck.getCard());
+            dealer.getHand().addCardToHand(deck.getCardFromDeck());
         }
+        System.out.println("finished dealerTurn");
     }
 
     public void winnerCheck(Table table)
     {
+        System.out.println("start winnerCheck");
         //TODO: Check for Winner
         if(table.getDealer().isCanWin())
         {
@@ -124,7 +140,7 @@ public class BlackJack {
                 }
             }
         }
-
+        System.out.println("finished winnerCheck");
     }
 
     public void startGame(Dealer dealer, List<BlackJackPlayer> players, Deck deck) throws IOException {

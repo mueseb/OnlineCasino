@@ -34,12 +34,12 @@ public class Deck {
         return cardDeck;
     }
 
-    public Card getCard()
+    public Card getCardFromDeck()
     {
         return cardDeck.pop();
     }
 
-    public List<Card> getCards(int cnt)
+    public List<Card> getCardsFromDeck(int cnt)
     {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < cnt; i++) {
@@ -47,5 +47,4 @@ public class Deck {
         }
         return cards;
     }
-
 }
