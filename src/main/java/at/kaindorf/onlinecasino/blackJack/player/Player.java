@@ -21,7 +21,7 @@ public class Player {
         this.hand = hand;
     }
 
-    public boolean isCanWin() {
+    public boolean canWin() {
         return canWin;
     }
 

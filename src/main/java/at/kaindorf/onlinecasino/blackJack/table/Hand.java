@@ -15,23 +15,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Hand {
-    private List<Card> hand = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
     public void addCardsToHand(List<Card> card)
     {
-        hand.addAll(card);
+        cards.addAll(card);
     }
 
     public void addCardToHand(Card card)
     {
-        hand.add(card);
+        cards.add(card);
     }
 
     public int getHandTotal()
     {
         int total=0;
         int ace=0;
-        for (Card card : hand) {
+        for (Card card : cards) {
             total += card.getNum();
             if(card.getNum()==11)
             {
@@ -40,13 +40,13 @@ public class Hand {
         }
         if(total>21 && ace>0)
         {
-            for (Card card:hand) {
+            for (Card card: cards) {
                 if(card.getNum()==11)
                 {
                     card.setNum(1);
                     ace--;
                 }
-                if(total(hand)<=21 || ace==0)
+                if(total(cards)<=21 || ace==0)
                 {
                     return total;
                 }
@@ -66,17 +66,27 @@ public class Hand {
 
     public void clearHand()
     {
-        hand = new ArrayList<>();
+        cards = new ArrayList<>();
     }
 
-    public List<Card> getHand() {
-        return hand;
+    public List<Card> getCards() {
+        return cards;
     }
 
     public List<Card> getDealerHand()
     {
-        List<Card> obscHand = hand;
+        List<Card> obscHand = cards;
         obscHand.remove(0);
         return obscHand;
+    }
+
+    @Override
+    public String toString() {
+        String cards = "";
+        for (Card card: this.cards) {
+            cards+=card.getNum()+", ";
+        }
+        cards+="\n";
+        return cards;
     }
 }

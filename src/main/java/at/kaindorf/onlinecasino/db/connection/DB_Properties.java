@@ -21,16 +21,16 @@ public class DB_Properties {
     private String db_user = "postgres";
     private String db_password = "2002";
 
-    static {
-        Path path = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "dbConnect.properties");
-
-        try {
-            FileInputStream fis = new FileInputStream(path.toFile());
-            dbProperties.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    static {
+//        Path path = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "dbConnect.properties");
+//
+//        try {
+//            FileInputStream fis = new FileInputStream(path.toFile());
+//            dbProperties.load(fis);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static String getProperty(String key) {
         return dbProperties.getProperty(key);

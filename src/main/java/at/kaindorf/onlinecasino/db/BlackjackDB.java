@@ -4,6 +4,7 @@
 */
 package at.kaindorf.onlinecasino.db;
 
+import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.connection.DB_Access;
 import at.kaindorf.onlinecasino.db.connection.DB_CachedConnection;
 import at.kaindorf.onlinecasino.db.connection.DB_Database;
@@ -28,7 +29,7 @@ public class BlackjackDB {
     private PreparedStatement getUserByName;
 
     private PreparedStatement insertUser;
-    private PreparedStatement insertGameByID;
+    private PreparedStatement saveGame;
 
     private PreparedStatement updateUserById;
     private PreparedStatement updateUserBalance;
@@ -135,12 +136,18 @@ public class BlackjackDB {
 
     //TODO finishing
     //inserts finished game with playerID
-    public boolean insertGameStat(DBgame game) throws SQLException {
-        if(insertGameByID == null)
+    public boolean saveGameStat(DBgame game) throws SQLException {
+        if(saveGame == null)
         {
-            insertGameByID = connection.prepareStatement(DB_PrepStat.insertGameByID.sqlValue);
+            saveGame = connection.prepareStatement(DB_PrepStat.saveGame.sqlValue);
         }
-        insertGameByID.setInt(1,game.getPlayerID());
+        saveGame.setInt(1,game.getPlayerID());
+        saveGame.setInt(2,game.getBet());
+        saveGame.setString(3,game.getDealerHand().getCards().toString());
+        saveGame.setString(4,game.getPlayerHand().getCards().toString());
+        saveGame.setDate(5,game.getStartTime());
+        saveGame.setDate(6,game.getEndTime());
+        saveGame.setInt(7,game.getResult());
         return true;
     }
 

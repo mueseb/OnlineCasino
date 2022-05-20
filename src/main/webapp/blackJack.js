@@ -12,7 +12,7 @@ function startGame()
     giveStarterCards();
 }
 
-function giveStarterCards(/*playerList*/)
+function giveStarterCards()
 {
     //TODO fetch player cards
     //TODO: fetch dealer cards
@@ -48,6 +48,16 @@ function checkPlayerCards()
 function checkDealerCards()
 {
     //TODO: get dealer card count from backend
+}
+
+function displayPlayerCards()
+{
+
+}
+
+function displayDealerCards()
+{
+    
 }
 
 

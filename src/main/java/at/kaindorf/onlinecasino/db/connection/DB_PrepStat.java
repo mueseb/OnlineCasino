@@ -7,7 +7,7 @@ public enum DB_PrepStat {
     getGamesByID("SELECT gamestuff FROM public.\"game\" WHERE name = ?;"), //TODO replace gamestuff
 
     insertUser("INSERT INTO public.\"player\" (name, password) VALUES(?, ?)"),
-    insertGameByID("INSERT INTO public.\"game\" (id,  bet, dealerhand, playerhand, date, result) VALUES(?, ?, ?, ?, ?, ?)"),
+    saveGame("INSERT INTO public.\"game\" (playerid,  bet, dealerhand, playerhand, starttime, endtime, result) VALUES(?, ?, ?, ?, ?, ?, ?)"),
 
     updateUserBalance("UPDATE public.\"player\" SET balance = ? WHERE id = ?;"),
 

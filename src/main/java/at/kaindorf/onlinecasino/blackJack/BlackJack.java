@@ -24,9 +24,11 @@ public class BlackJack {
         Deck deck = new Deck();
         System.out.println(deck.getCardDeck());
         BlackJack blackJack = new BlackJack();
+        players.add(new BlackJackPlayer());
+        BlackJackPlayer player = new BlackJackPlayer();
         try {
-            blackJack.startGame(dealer,players,deck);
-            if(players.get(0).isCanWin())
+            blackJack.startGame(dealer,player,deck);
+            if(player.canWin())
             {
                 System.out.println("Player Win");
             }
@@ -44,9 +46,10 @@ public class BlackJack {
     {
         System.out.println("start givingStarterCards");
         table.getDealer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
-        for (BlackJackPlayer player: table.getPlayers()) {
-            player.getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
-        }
+//        for (BlackJackPlayer player: table.getPlayers()) {
+//            player.getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
+//        }
+        table.getPlayer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         System.out.println("finished givingStarterCards");
     }
 
@@ -59,6 +62,7 @@ public class BlackJack {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if(!player.isStand())
         {
+            System.out.println(player.getHand().toString());
             if(player.getTurn()==1)
             {
                 System.out.println("Choose: [1] hit, [2] stand, [3] double down");
@@ -82,7 +86,8 @@ public class BlackJack {
             }
             if(player.getHand().getHandTotal()>21)
             {
-                //TODO: Check Aces on Bust
+                player.setCanWin(false);
+                player.setStand(true);
             }
         }
         else
@@ -90,13 +95,11 @@ public class BlackJack {
             return;
         }
         player.addTurn();
-        System.out.println("finished playerTurn");
     }
 
     //Checks if all Players are Standing
     public boolean allPlayerStandCheck(List<BlackJackPlayer> players)
     {
-        System.out.println("Stand check");
         boolean allStanding = true;
         for (BlackJackPlayer player:players)
         {
@@ -115,47 +118,56 @@ public class BlackJack {
     public void dealerTurn(Dealer dealer, Deck deck)
     {
         System.out.println("start dealerTurn");
-        //TODO: Check if Bust
-        //TODO: Check Aces on Bust
         while(dealer.getHand().getHandTotal()<17)
         {
             dealer.getHand().addCardToHand(deck.getCardFromDeck());
         }
-        System.out.println("finished dealerTurn");
+        System.out.println(dealer.getHand().toString());
     }
 
-    public void winnerCheck(Table table)
+    public int winnerCheck(Table table)
     {
         System.out.println("start winnerCheck");
-        //TODO: Check for Winner
-        if(table.getDealer().isCanWin())
+        if(table.getDealer().canWin())
         {
-            for (BlackJackPlayer player: table.getPlayers()) {
-                if(player.isCanWin())
+            if(table.getPlayer().canWin())
                 {
-                    if(player.getHand().getHandTotal()<table.getDealer().getHand().getHandTotal())
+                    if(table.getPlayer().getHand().getHandTotal()<table.getDealer().getHand().getHandTotal())
                     {
-                        player.setCanWin(false);
+                        table.getPlayer().setCanWin(false);
+                        return 2;
+                    }else {
+                        if(table.getPlayer().getHand().getHandTotal()==table.getDealer().getHand().getHandTotal()){
+                            return 3;
+                        }
+                        else {
+                            table.getDealer().setCanWin(false);
+                            return 1;
+                        }
                     }
-                }
+                }else {
+                return 2;
             }
         }
-        System.out.println("finished winnerCheck");
+        else
+        {
+            return 1;
+        }
     }
 
-    public void startGame(Dealer dealer, List<BlackJackPlayer> players, Deck deck) throws IOException {
-        Table table = new Table(dealer,players,deck);
+    public void startGame(Dealer dealer, BlackJackPlayer player, Deck deck) throws IOException {
+        Table table = new Table(dealer,player,deck);
 
         System.out.println("Give starterCards");
         giveStarterCards(table);
-        System.out.println("Successful gave starterCards");
 
-        while(!allPlayerStandCheck(players))
+        while(!player.isStand())
         {
-            for (BlackJackPlayer player:table.getPlayers())
-            {
-                playerTurn(player,table.getDeck());
-            }
+//            for (BlackJackPlayer player:table.getPlayer())
+//            {
+//                playerTurn(player,table.getDeck());
+//            }
+            playerTurn(player,table.getDeck());
         }
 
         dealerTurn(table.getDealer(),table.getDeck());

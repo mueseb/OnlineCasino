@@ -17,7 +17,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return suit +" "+ num +" "+numString + "\n";
+        return suit +","+ num +","+numString;
     }
 
     public String getSuit() {
