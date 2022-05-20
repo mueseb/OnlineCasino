@@ -4,7 +4,7 @@ package at.kaindorf.onlinecasino.db.connection;
 public enum DB_PrepStat {
     getUserByID("SELECT name,balance FROM public.\"player\" WHERE playerid = ?;"),
     getUserByName("SELECT playerid FROM public.\"player\" WHERE name = ?;"),
-    getGamesByID("SELECT gamestuff FROM public.\"game\" WHERE name = ?;"), //TODO replace gamestuff
+    getGamesByID("SELECT id, playerid,  bet, dealerhand, playerhand, starttime, endtime, result FROM public.\"game\" WHERE name = ?;"), //TODO replace gamestuff
 
     insertUser("INSERT INTO public.\"player\" (name, password) VALUES(?, ?)"),
     saveGame("INSERT INTO public.\"game\" (playerid,  bet, dealerhand, playerhand, starttime, endtime, result) VALUES(?, ?, ?, ?, ?, ?, ?)"),

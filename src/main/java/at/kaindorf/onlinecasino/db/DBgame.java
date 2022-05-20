@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 //TODO rework
 @Data
@@ -19,7 +20,7 @@ public class DBgame {
     private int bet;
     private Hand dealerHand;
     private Hand playerHand;
-    private Date startTime;
-    private Date endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private int result;
 }

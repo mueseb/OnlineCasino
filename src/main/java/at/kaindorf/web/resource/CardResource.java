@@ -17,7 +17,9 @@ import jakarta.ws.rs.core.Response;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class CardResource {
         table = new Table(dealer,player,deck);
         blackJack = new BlackJack();
         table.setPlayerID(id);
-        game.setStartTime(Date.valueOf(LocalDate.now()));
+        game.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         return Response.ok().build();
     }
 
@@ -108,7 +110,7 @@ public class CardResource {
             game.setDealerHand(table.getDealer().getHand());
             game.setPlayerHand(table.getPlayer().getHand());
             game.setResult(table.getResult());
-            game.setEndTime(Date.valueOf(LocalDate.now()));
+            game.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
 //            game.setBet();//TODO bet
             blackjackDB.saveGameStat(game);
         } catch (SQLException | ClassNotFoundException e) {
