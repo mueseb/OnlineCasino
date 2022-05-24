@@ -1,52 +1,56 @@
 //Checks the input of the login inputs
 //region checkInput
-function checkInput(username, pwd){
+function checkInput(username, pwd) {
     let checkUsername = true;
     let checkPwd = true;
-    document.getElementById("errorText").innerText ="";
-    if(username == "" || username == " "){
+    document.getElementById("errorText").innerText = "";
+    if (username == "" || username == " ") {
         document.getElementById("errorText").innerText += "Username is incorrect."
         checkUsername = false;
-    }
-    else {
+    } else {
         document.getElementById("errorText").innerText = "";
         checkUsername = true;
     }
 
-    if(pwd.length < 8){
+    if (pwd.length < 8) {
         document.getElementById("errorText").innerText += "Password is incorrect.";
         checkPwd = false;
-    }
-    else {
+    } else {
         document.getElementById("errorText").innerText = "";
         checkPwd = true;
     }
 
-    if (checkUsername && checkPwd){
+    if (checkUsername && checkPwd) {
         createNewUser(username, pwd);
     }
 }
+
 //endregion
 
-function login(username, pwd){
+function login(username, pwd) {
     let userData = {
         'username': username,
         'pwd': pwd
     }
 
-    fetch('./api/login' ,{
+    fetch('./api/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(userData)
     })
         .then(res => {
-            console.log(res.status)
-            if(res.status != 200){
+            if (res.status != 200) {
+                document.getElementById("errorText").innerText = "";
+                document.getElementById("errorText").innerText = "Username or password wrong! (" +
+                    res.status + " | " + res.statusText + ")";
+            } else {
+                getBalance(username,pwd)
+                document.getElementById("errorText").innerText = "Successful Login";
             }
         })
 }
 
-function createNewUser(username, pwd){
+function createNewUser(username, pwd) {
     let newUserDate = {
         'username': username,
         'pwd': pwd
@@ -57,12 +61,32 @@ function createNewUser(username, pwd){
         body: JSON.stringify(newUserDate)
     })
         .then(res => {
-            if(res.status != 200){
+            console.log(res.status)
+            if (res.status != 200) {
+                document.getElementById("errorText").innerText = "";
                 document.getElementById("errorText").innerText = "An error accrued try again. (" +
                     res.status + " | " + res.statusText + ")";
-            }
-            else{
+            } else {
+                document.getElementById("errorText").innerText = "LETS Go";
                 document.getElementById("errorText").innerText = "";
             }
         })
+
+    //login(username, pwd);
+}
+
+function getBalance(username, pwd)
+{
+    let newUserDate = {
+        'username': username,
+        'pwd': pwd
+    }
+    fetch('./api/game', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newUserDate)
+    })
+        .then(res => res.json())
+        .then(data => document.getElementById("errorText").innerText+=", Balance:"+ data);
+
 }

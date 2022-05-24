@@ -18,6 +18,8 @@ import java.util.List;
 @Data
 public class BlackjackDB {
 
+    public String salt = "d8gw6b4ghlakg45w8";
+
     public DB_Access db_access;
     public DB_Database db_database;
     private Connection connection;
@@ -27,6 +29,7 @@ public class BlackjackDB {
     private PreparedStatement getUserByIDStat;
     private PreparedStatement getGamesByID;
     private PreparedStatement getUserByName;
+    private PreparedStatement getUserBalance;
 
     private PreparedStatement insertUser;
     private PreparedStatement saveGame;
@@ -53,6 +56,16 @@ public class BlackjackDB {
         return theInstance;
     }
 
+    public int getUserBalance(String name) throws SQLException {
+        if (getUserBalance == null) {
+            getUserBalance = connection.prepareStatement(DB_PrepStat.getUserBalance.sqlValue);
+        }
+        getUserBalance.setString(1,name);
+        //cache.releaseStatement(getGamesByID); //TODO ?
+        ResultSet rs = getUserBalance.executeQuery();
+        rs.next();
+        return rs.getInt("balance");
+    }
 
     //gets username and balance by ID
     public DBplayer getUserDataByID(int id) throws SQLException {
@@ -95,9 +108,8 @@ public class BlackjackDB {
         checkUserPassword.setString(1,name);
         ResultSet rs = checkUserPassword.executeQuery();
         rs.next();
-        String password = pwd+name;
-        password = password.hashCode()+"";
-        if(rs.getString("password").equals(password))
+        Hash hash = new Hash();
+        if(hash.checkHashedPassword(rs.getString("password"),pwd,salt))
         {
             return true;
         }
@@ -114,8 +126,8 @@ public class BlackjackDB {
         {
             return false;
         }
-        String password = user.getUsrpwd()+user.getUsrname();
-        password=password.hashCode()+"";
+        Hash hash = new Hash();
+        String password =hash.getHashedPassword(user.getUsrpwd(),salt);
         insertUser.setString(1,user.getUsrname());
         insertUser.setString(2,password);
         int rs = insertUser.executeUpdate();
@@ -145,8 +157,8 @@ public class BlackjackDB {
         saveGame.setInt(2,game.getBet());
         saveGame.setString(3,game.getDealerHand().getCards().toString());
         saveGame.setString(4,game.getPlayerHand().getCards().toString());
-        saveGame.setDate(5,game.getStartTime());
-        saveGame.setDate(6,game.getEndTime());
+        saveGame.setTimestamp(5,game.getStartTime());
+        saveGame.setTimestamp(6,game.getEndTime());
         saveGame.setInt(7,game.getResult());
         return true;
     }
@@ -174,10 +186,10 @@ public class BlackjackDB {
 //            System.out.println("Connected?");
 //            //System.out.println(blackjackDB.getPlayerByID(1));
 ////            blackjackDB.getUserByID2(1);
-//            Connection connection = blackjackDB.getConnection();
-//            DBplayer userByID = blackjackDB.getUserDataByID(0);
-//            System.out.println(userByID.getUsrname());
-//            connection.close();
+////            Connection connection = blackjackDB.getConnection();
+////            DBplayer userByID = blackjackDB.getUserDataByID(0);
+//            System.out.println(blackjackDB.getUserBalance("admin"));
+////            connection.close();
 //            System.out.println("Closed Connection");
 //        } catch (SQLException | ClassNotFoundException e) {
 //            e.printStackTrace();

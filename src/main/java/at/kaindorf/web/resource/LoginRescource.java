@@ -25,11 +25,10 @@ public class LoginRescource {
 
     public String creatJWT(String name) {
         JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), new Payload(name));
-
         try {
             jwsObject.sign(new MACSigner(SECRET));
             return jwsObject.serialize();
-        } catch (JOSEException e) {
+        } catch (JOSEException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;
@@ -37,10 +36,10 @@ public class LoginRescource {
 
     @POST
     @Produces
-    public Response login(LoginData loginData) {
-        //loginData.setPwd("" + hashPassword(loginData));
+    public Response login(LoginData userData) {
         DBplayer player;
-        player = new DBplayer(loginData.getUsername(),loginData.getPwd());
+        player = new DBplayer(userData.getUsername(),userData.getPwd());
+        System.out.println(userData.getUsername());
         try {
             BlackjackDB blackJackDB = BlackjackDB.getInstance();
             DBplayer userByID = blackJackDB.getUserDataByID(0);
@@ -48,7 +47,7 @@ public class LoginRescource {
             if (blackJackDB.checkIfUserExists(player.getUsrname())) {
                 if(blackJackDB.checkUserPassword(player.getUsrname(),player.getUsrpwd()))
                 {
-                    return Response.ok().header("Authorization", creatJWT(loginData.getUsername())).build();
+                    return Response.ok().header("Authorization", creatJWT(userData.getUsername())).build();
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -61,7 +60,6 @@ public class LoginRescource {
     @POST
     @Path("/createUser")
     public Response creatUser(LoginData loginData) {
-//        loginData.setPwd(hashPWD(loginData));
         DBplayer player;
         player = new DBplayer(loginData.getUsername(),loginData.getPwd());
         try {
@@ -75,14 +73,6 @@ public class LoginRescource {
             e.printStackTrace();
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
-    }
-
-    //Hashes the password
-    public String hashPWD(LoginData loginData) {
-        String plainPWD = loginData.getPwd() + loginData.getUsername();
-        String hashedPWD = plainPWD.hashCode() + "";
-
-        return hashedPWD;
     }
 
 }

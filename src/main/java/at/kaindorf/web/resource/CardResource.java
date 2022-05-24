@@ -11,8 +11,11 @@ import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
 import at.kaindorf.onlinecasino.db.DBgame;
+import at.kaindorf.web.beans.LoginData;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.Date;
@@ -23,7 +26,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/cards")
+@Path("/game")
 public class CardResource {
 
     Dealer dealer;
@@ -34,7 +37,7 @@ public class CardResource {
     BlackjackDB blackjackDB;
     DBgame game;
 
-    @GET
+
     public Response initGame(int id)
     {
         game = new DBgame();
@@ -50,35 +53,35 @@ public class CardResource {
         return Response.ok().build();
     }
 
-    @GET
+
     public String getPlayerStarterCards()
     {
         table.getPlayer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         return getPlayerCards(table.getPlayer());
     }
 
-    @GET
+
     public String getDealerStarterCards()
     {
         table.getDealer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         return getDealerCards(table.getDealer());
     }
 
-    @GET
+
     public String addDealerCard()
     {
         table.getDealer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
         return getDealerCards(table.getDealer());
     }
 
-    @GET
+
     public String addPlayerCard()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
         return getPlayerCards(table.getPlayer());
     }
 
-    @GET
+
     public String onDoubleDown()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
@@ -86,14 +89,14 @@ public class CardResource {
         return getPlayerCards(table.getPlayer());
     }
 
-    @GET
+
     public Response onStand()
     {
         table.getPlayer().setStand(true);
         return Response.ok().build();
     }
 
-    @GET
+
     public int onEndGame()
     {
         //1:Player Win; 2:Dealer Win; 3:Draw
@@ -116,6 +119,23 @@ public class CardResource {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @POST
+    @Produces
+    public int getPlayerBalance(LoginData loginData)
+    {
+        int balance = 0;
+        try {
+            if(blackjackDB == null)
+            {
+                blackjackDB = BlackjackDB.getInstance();
+            }
+            balance=blackjackDB.getUserBalance(loginData.getUsername());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return balance;
     }
 
     public String getDealerCards(Dealer dealer){
