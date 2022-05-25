@@ -5,9 +5,9 @@
 package at.kaindorf.onlinecasino.blackJack;
 
 import at.kaindorf.onlinecasino.blackJack.player.Dealer;
-import at.kaindorf.onlinecasino.blackJack.table.Deck;
+import at.kaindorf.onlinecasino.blackJack.gameAssets.Deck;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
-import at.kaindorf.onlinecasino.blackJack.table.Table;
+import at.kaindorf.onlinecasino.blackJack.gameAssets.Table;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class BlackJack {
     }
 
 
-    //Gives the Dealer and Every Player 2 cards
+    //Gives the Dealer and Player 2 cards
     public void giveStarterCards(Table table)
     {
         System.out.println("start givingStarterCards");
@@ -125,6 +125,9 @@ public class BlackJack {
         System.out.println(dealer.getHand().toString());
     }
 
+    //Checks for Player Win:    return 1
+    //Checks for Dealer Win:    return 2
+    //Checks for Draw:          return 3
     public int winnerCheck(Table table)
     {
         System.out.println("start winnerCheck");

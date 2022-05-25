@@ -2,10 +2,10 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.blackJack.table;
+package at.kaindorf.onlinecasino.blackJack.gameAssets;
 
-import at.kaindorf.onlinecasino.blackJack.data.Rank;
-import at.kaindorf.onlinecasino.blackJack.data.Suit;
+import at.kaindorf.onlinecasino.blackJack.cardData.Rank;
+import at.kaindorf.onlinecasino.blackJack.cardData.Suit;
 
 import java.util.*;
 import java.util.stream.Collectors;

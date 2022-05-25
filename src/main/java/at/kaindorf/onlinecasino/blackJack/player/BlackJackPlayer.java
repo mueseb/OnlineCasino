@@ -4,7 +4,7 @@
 */
 package at.kaindorf.onlinecasino.blackJack.player;
 
-import at.kaindorf.onlinecasino.blackJack.table.Hand;
+import at.kaindorf.onlinecasino.blackJack.gameAssets.Hand;
 
 public class BlackJackPlayer extends Player{
     private int turn;

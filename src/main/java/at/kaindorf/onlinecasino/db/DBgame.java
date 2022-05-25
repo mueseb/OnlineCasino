@@ -4,11 +4,10 @@
 */
 package at.kaindorf.onlinecasino.db;
 
-import at.kaindorf.onlinecasino.blackJack.table.Hand;
+import at.kaindorf.onlinecasino.blackJack.gameAssets.Hand;
 import lombok.Data;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 //TODO rework

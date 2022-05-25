@@ -1,6 +1,6 @@
 package at.kaindorf.onlinecasino.blackJack.player;
 
-import at.kaindorf.onlinecasino.blackJack.table.Hand;
+import at.kaindorf.onlinecasino.blackJack.gameAssets.Hand;
 
 
 //Generic Player
@@ -20,6 +20,15 @@ public class Player {
     public void setHand(Hand hand) {
         this.hand = hand;
     }
+
+//    public boolean canWin2(boolean... boo)
+//    {
+//        if(boo.length!=0)
+//        {
+//            canWin=boo[0];
+//        }
+//        return canWin;
+//    }
 
     public boolean canWin() {
         return canWin;

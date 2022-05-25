@@ -2,7 +2,7 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.blackJack.table;
+package at.kaindorf.onlinecasino.blackJack.gameAssets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

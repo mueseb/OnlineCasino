@@ -26,21 +26,17 @@ public class Hash {
 
     public boolean checkHashedPassword(String hash, String pwd, String salt)
     {
-         if(getHashedPassword(pwd,salt).equals(hash))
-         {
-             return true;
-         }
-         return false;
+        return getHashedPassword(pwd, salt).equals(hash);
     }
 
-    public static void main(String[] args) {
-        String pwd,salt;
-        pwd = "admin";
-        salt = "d8gw6b4ghlakg45w8";
-        String hashedpwd = "538dff632b1f7621ea20b88d104c41aadb09dcfba467fc36a22c64026dccb495";
-        Hash hash = new Hash();
-        System.out.println(hash.getHashedPassword(pwd,salt));
-        System.out.println(hash.checkHashedPassword(hashedpwd,pwd,salt));
-    }
+//    public static void main(String[] args) {
+//        String pwd,salt;
+//        pwd = "admin";
+//        salt = "d8gw6b4ghlakg45w8";
+//        String hashedpwd = "538dff632b1f7621ea20b88d104c41aadb09dcfba467fc36a22c64026dccb495";
+//        Hash hash = new Hash();
+//        System.out.println(hash.getHashedPassword(pwd,salt));
+//        System.out.println(hash.checkHashedPassword(hashedpwd,pwd,salt));
+//    }
 
 }

@@ -4,7 +4,6 @@
 */
 package at.kaindorf.onlinecasino.db;
 
-import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.connection.DB_Access;
 import at.kaindorf.onlinecasino.db.connection.DB_CachedConnection;
 import at.kaindorf.onlinecasino.db.connection.DB_Database;
@@ -48,6 +47,17 @@ public class BlackjackDB {
         connection = db_database.getConnection();
     }
 
+    public int getUserIdByName(String name) throws SQLException {
+        if(getUserByName == null)
+        {
+            getUserByName = connection.prepareStatement(DB_PrepStat.getUserByName.sqlValue);
+        }
+        getUserByName.setString(1,name);
+        ResultSet rs = getUserByName.executeQuery();
+        rs.next();
+        return rs.getInt("playerid");
+    }
+
     public static BlackjackDB getInstance() throws SQLException, ClassNotFoundException {
         if(theInstance == null)
         {
@@ -61,6 +71,7 @@ public class BlackjackDB {
             getUserBalance = connection.prepareStatement(DB_PrepStat.getUserBalance.sqlValue);
         }
         getUserBalance.setString(1,name);
+
         //cache.releaseStatement(getGamesByID); //TODO ?
         ResultSet rs = getUserBalance.executeQuery();
         rs.next();
@@ -109,11 +120,7 @@ public class BlackjackDB {
         ResultSet rs = checkUserPassword.executeQuery();
         rs.next();
         Hash hash = new Hash();
-        if(hash.checkHashedPassword(rs.getString("password"),pwd,salt))
-        {
-            return true;
-        }
-        return false;
+        return hash.checkHashedPassword(rs.getString("password"), pwd, salt);
     }
 
     //Inserts player into Database | Returns false if player already exists/failed to insert
@@ -153,6 +160,18 @@ public class BlackjackDB {
         {
             saveGame = connection.prepareStatement(DB_PrepStat.saveGame.sqlValue);
         }
+        //1:Player Win; 2:Dealer Win; 3:Draw
+        int newBalance = getUserBalance(getUserDataByID(game.getPlayerID()).getUsrname());
+        switch(game.getResult())
+        {
+            case 1:
+                newBalance = newBalance + game.getBet() * 2;
+                break;
+            case 2:
+                newBalance = newBalance - game.getBet();
+                break;
+        }
+        updateBalance(game.getPlayerID(),newBalance);
         saveGame.setInt(1,game.getPlayerID());
         saveGame.setInt(2,game.getBet());
         saveGame.setString(3,game.getDealerHand().getCards().toString());

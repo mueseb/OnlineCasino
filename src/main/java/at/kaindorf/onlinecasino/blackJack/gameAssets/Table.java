@@ -2,14 +2,11 @@
     Klasse:  4BHIF 
     @author: Sebastian Münzer
 */
-package at.kaindorf.onlinecasino.blackJack.table;
+package at.kaindorf.onlinecasino.blackJack.gameAssets;
 
 import at.kaindorf.onlinecasino.blackJack.player.Dealer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
-import at.kaindorf.onlinecasino.db.DBplayer;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class Table {

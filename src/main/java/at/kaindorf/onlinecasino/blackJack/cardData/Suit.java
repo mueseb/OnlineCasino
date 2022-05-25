@@ -1,4 +1,4 @@
-package at.kaindorf.onlinecasino.blackJack.data;
+package at.kaindorf.onlinecasino.blackJack.cardData;
 
 public enum Suit {
     Clubs,
