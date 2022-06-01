@@ -1,3 +1,4 @@
+let _jwt;
 //Checks the input of the login inputs
 //region checkInput
 function checkInput(username, pwd) {
@@ -44,7 +45,9 @@ function login(username, pwd) {
                 document.getElementById("errorText").innerText = "Username or password wrong! (" +
                     res.status + " | " + res.statusText + ")";
             } else {
-                getBalance(username,pwd)
+                _jwt = res.headers.get("Authorization");
+                getBalance(username, pwd)
+                document.getElementById("nameOnMainPage").innerText = username;
                 document.getElementById("errorText").innerText = "Successful Login";
             }
         })
@@ -67,16 +70,13 @@ function createNewUser(username, pwd) {
                 document.getElementById("errorText").innerText = "An error accrued try again. (" +
                     res.status + " | " + res.statusText + ")";
             } else {
-                document.getElementById("errorText").innerText = "LETS Go";
+                document.getElementById("errorText").innerText = "";
                 document.getElementById("errorText").innerText = "";
             }
         })
-
-    //login(username, pwd);
 }
 
-function getBalance(username, pwd)
-{
+function getBalance(username, pwd) {
     let newUserDate = {
         'username': username,
         'pwd': pwd
@@ -87,6 +87,9 @@ function getBalance(username, pwd)
         body: JSON.stringify(newUserDate)
     })
         .then(res => res.json())
-        .then(data => document.getElementById("errorText").innerText+=", Balance:"+ data);
+        .then(data => {
+            document.getElementById("balance").innerText = data;
+        })
+        .then(data => document.getElementById("errorText").innerText += ", Balance:" + data);
 
 }

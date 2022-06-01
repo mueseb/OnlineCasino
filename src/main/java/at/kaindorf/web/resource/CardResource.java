@@ -11,10 +11,10 @@ import at.kaindorf.onlinecasino.blackJack.gameAssets.Deck;
 import at.kaindorf.onlinecasino.blackJack.gameAssets.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
 import at.kaindorf.onlinecasino.db.DBgame;
+import at.kaindorf.onlinecasino.db.connection.DB_PrepStat;
+import at.kaindorf.web.beans.BalanceData;
 import at.kaindorf.web.beans.LoginData;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.SQLException;
@@ -57,7 +57,6 @@ public class CardResource {
         return Response.ok().build();
     }
 
-    @POST
     @Path("/getPlayerStarterCards")
     public String getPlayerStarterCards()
     {
@@ -65,7 +64,6 @@ public class CardResource {
         return getPlayerCards(table.getPlayer());
     }
 
-    @POST
     @Path("/getDealerStarterCards")
     public String getDealerStarterCards()
     {
@@ -73,7 +71,6 @@ public class CardResource {
         return getDealerCards(table.getDealer());
     }
 
-    @POST
     @Path("/addDealerCard")
     public String addDealerCard()
     {
@@ -81,7 +78,7 @@ public class CardResource {
         return getDealerCards(table.getDealer());
     }
 
-    @POST
+
     @Path("/addPlayerCard")
     public String addPlayerCard()
     {
@@ -89,7 +86,6 @@ public class CardResource {
         return getPlayerCards(table.getPlayer());
     }
 
-    @POST
     @Path("/doubleDown")
     public String onDoubleDown()
     {
@@ -98,7 +94,7 @@ public class CardResource {
         return getPlayerCards(table.getPlayer());
     }
 
-    @POST
+
     @Path("stand")
     public Response onStand()
     {
@@ -106,7 +102,7 @@ public class CardResource {
         return Response.ok().build();
     }
 
-    @POST
+
     @Path("finishGame")
     public int onEndGame()
     {
@@ -173,5 +169,28 @@ public class CardResource {
             }
         }
         return cards;
+    }
+
+
+//    public boolean updateBalance(int id,int balance) throws SQLException {
+//        if(updateUserBalance == null)
+//        {
+//            updateUserBalance = connection.prepareStatement(DB_PrepStat.updateUserBalance.sqlValue);
+//        }
+//        updateUserBalance.setInt(1,id);
+//        updateUserBalance.setInt(2,balance);
+//        int rs = updateUserBalance.executeUpdate();
+//        return rs == 1;
+//    }
+
+    @PATCH
+    @Consumes
+    public void setPlayerBalance(BalanceData balanceData){
+        try {
+            int userID = blackjackDB.getUserIdByName(balanceData.getName());
+            blackjackDB.updateBalance(userID, balanceData.getBalance());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
