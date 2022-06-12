@@ -1,3 +1,8 @@
+/*
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 20.05.2022
+ * @project-name: Online Casino
+ */
 package at.kaindorf.web.auth;
 
 import jakarta.ws.rs.NameBinding;

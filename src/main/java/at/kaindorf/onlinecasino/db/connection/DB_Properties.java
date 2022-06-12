@@ -1,3 +1,8 @@
+/*
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 18.05.2022
+ * @project-name: Online Casino
+ */
 package at.kaindorf.onlinecasino.db.connection;
 
 import lombok.Data;

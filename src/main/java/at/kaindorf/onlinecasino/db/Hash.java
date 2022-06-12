@@ -1,3 +1,8 @@
+/*
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 24.05.2022
+ * @project-name: Online Casino
+ */
 package at.kaindorf.onlinecasino.db;
 
 import java.nio.charset.StandardCharsets;

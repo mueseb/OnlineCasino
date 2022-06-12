@@ -1,3 +1,8 @@
+/*
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 07.04.2022
+ * @project-name: Online Casino
+ */
 package at.kaindorf.web.resource;
 
 import at.kaindorf.onlinecasino.db.BlackjackDB;

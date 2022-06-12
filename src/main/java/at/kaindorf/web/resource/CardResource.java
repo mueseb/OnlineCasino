@@ -1,6 +1,7 @@
 /*
-    Klasse:  4BHIF 
-    @author: Sebastian Münzer
+    @author: Sebastian Münzer & Armin Hartner
+    @date: 29.04.2022
+    @project-name: Online Casino
 */
 package at.kaindorf.web.resource;
 
@@ -8,6 +9,7 @@ import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.player.Dealer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
+
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
 import at.kaindorf.onlinecasino.db.DBgame;

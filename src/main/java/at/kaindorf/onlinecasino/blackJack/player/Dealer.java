@@ -1,7 +1,8 @@
 /*
-    Klasse:  4BHIF 
-    @author: Sebastian Münzer
-*/
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 06.04.2022
+ * @project-name: Online Casino
+ */
 package at.kaindorf.onlinecasino.blackJack.player;
 
 
