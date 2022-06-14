@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InitGameData {
-    String name;
+    String username;
     int bet;
 }

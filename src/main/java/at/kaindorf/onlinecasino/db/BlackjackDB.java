@@ -67,6 +67,7 @@ public class BlackjackDB extends LoginData {
         getUserByName.setString(1,name);
         ResultSet rs = getUserByName.executeQuery();
         rs.next();
+        System.out.println("Username: " + name);
         return rs.getInt("playerid");
     }
 

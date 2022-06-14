@@ -7,6 +7,7 @@ package at.kaindorf.web.resource;
 import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
+import at.kaindorf.onlinecasino.blackJack.player.Player;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
@@ -20,6 +21,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +31,14 @@ public class CardResource {
     BlackJackDealer dealer;
     BlackJackPlayer player;
     Deck deck;
-    Table table;
     BlackJack blackJack;
     BlackjackDB blackjackDB = BlackjackDB.getInstance();
     DBgame game;
 
+    Table table;
+
     public CardResource() throws SQLException, ClassNotFoundException {
+        table=Table.getInstance();
     }
 
 
@@ -44,14 +48,16 @@ public class CardResource {
     {
         game = new DBgame();
         dealer = new BlackJackDealer();
-        List<BlackJackPlayer> players = new ArrayList<>();
         BlackJackPlayer player = new BlackJackPlayer();
-        players.add(new BlackJackPlayer());
         deck = new Deck();
-        table = new Table(dealer,player,deck);
+        System.out.println("Table C: "+LocalTime.now());
+        Table table = new Table(dealer,player,deck);
+        Table.setTableinstance(table);
+        System.out.println("TableID:" + table.getPlayerID());
         blackJack = new BlackJack();
+        System.out.println("Username CR: " + initGameData.getUsername());
         try {
-            table.setPlayerID(blackjackDB.getUserIdByName(initGameData.getName()));
+            table.setPlayerID(blackjackDB.getUserIdByName(initGameData.getUsername()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,10 +67,16 @@ public class CardResource {
     }
 
     @Path("/getPlayerStarterCards")
+    @GET
+    @Produces
     public String getPlayerStarterCards()
     {
         table.getPlayer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
+        System.out.println(table.getPlayer().getHand().getCards().toString());
+        System.out.println(getPlayerCards(table.getPlayer()));
+//        return 1;
         return getPlayerCards(table.getPlayer());
+//        return Response.ok(getPlayerCards(table.getPlayer())).build();
     }
 
     @Path("/getDealerStarterCards")
@@ -165,7 +177,7 @@ public class CardResource {
     public String getPlayerCards(BlackJackPlayer player){
         String cards="";
         for (int i = 0; i < player.getHand().getCards().size(); i++) {
-            cards+=player.getHand().getCards().get(i);
+            cards+=player.getHand().getCards().get(i).getCardCode();
             if(i+1!=player.getHand().getCards().size())
             {
                 cards+=";";
@@ -199,11 +211,13 @@ public class CardResource {
 
     @Path("getPlayerCardCount")
     public int getPlayerCardCount(){
+        BlackJackPlayer player = table.getPlayer();
         return player.getHand().getHandTotal();
     }
 
     @Path("getDealerCardCount")
     public int getDealerCardCount(){
+        BlackJackDealer dealer = table.getDealer();
         return dealer.getHand().getHandTotal();
     }
 }

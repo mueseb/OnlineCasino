@@ -6,9 +6,16 @@
  */
 package at.kaindorf.onlinecasino.blackJack.table;
 
+import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
+import at.kaindorf.onlinecasino.db.DBdata.DBgame;
 import lombok.Data;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 public class Table {
@@ -18,8 +25,19 @@ public class Table {
     private BlackJackPlayer player;
     private Deck deck;
 
+    private static Table tableinstance;
+
     public BlackJackDealer getDealer() {
         return dealer;
+    }
+
+    public static Table getInstance()
+    {
+        return tableinstance;
+    }
+
+    public static void setTableinstance(Table table) {
+        Table.tableinstance = table;
     }
 
     public void setDealer(BlackJackDealer dealer) {

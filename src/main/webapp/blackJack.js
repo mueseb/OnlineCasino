@@ -29,14 +29,18 @@ let dealerHand = [];
 let card = "F01";
 let _src;
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-function startGame()
-{
+function startGame() {
 
     let userData = {
         'username': localStorage.getItem("name"),
-        'pwd': localStorage.getItem("pwd")
+        'bet': _bets
     }
+
+    console.log(userData.username)
     fetch('./api/game/initGame', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -45,51 +49,45 @@ function startGame()
     })
         .then(res => {
             let errorText = res.status + " | " + res.statusText;
-            if(res.status == 200){
+            if (res.status == 200) {
                 document.getElementById("mainError").innerText = errorText;
-                giveStarterCards();
 
+                giveStarterCards();
                 for (let i = 0; i < playerHand.length; i++) {
                     console.log(playerHand[i]);
                 }
-                checkPlayerCards();
-                displayPlayerCards();
-            }
-            else{
+                // checkPlayerCards();
 
+            } else {
                 document.getElementById("mainError").innerText = errorText;
             }
         })
 
-
 }
+
 
 function giveStarterCards()
 {
     fetch('./api/game/getPlayerStarterCards')
-        .then(res => {
-            console.log(res.status + " | " + res.statusText)
-            res.text()
-        })
+        .then(res => {return res.text()})
         .then(data => {
+            console.log(data)
             let token = data.split(";");
             for (let i = 0; i < token.length; i++) {
                 playerHand[i] = token[i];
+                console.log(token[i])
             }
-        })
+        }).then(displayPlayerCards)
+
 
     fetch('./api/game/getDealerStarterCards')
-        .then(res => {
-            console.log(res.status + " | " + res.statusText)
-            res.text()
-        })
+        .then(res => {return res.text()})
         .then(data => {
             let token = data.split(";");
             for (let i = 0; i < token.length; i++) {
                 dealerHand[i] = token[i];
             }
-        })
-
+        }).then(displayDealerCards)
 }
 
 function onDoubleDown()
@@ -158,14 +156,14 @@ function endGame()
     document.getElementById("mainError").innerText = "Game has ended";
 }
 
-function checkPlayerCards() //count cards
-{
-    fetch('./api/game/getPlayerCardCount')
-        .then(res => res.text())
-        .then(data => {
-            document.getElementById("cardCount").innerText = data;
-        })
-}
+// function checkPlayerCards() //count cards
+// {
+//     fetch('./api/game/getPlayerCardCount')
+//         .then(res => res.text())
+//         .then(data => {
+//             document.getElementById("cardCount").innerText = data;
+//         })
+// }
 
 function checkDealerCards()
 {
@@ -179,6 +177,7 @@ function checkDealerCards()
 function displayPlayerCards()
 {
     let table = document.getElementById("displayPlayerCard");
+    console.log("joa")
     table.innerHTML = "";
     for (let i = 0; i < playerHand.length; i++) {
         card = playerHand[i];
