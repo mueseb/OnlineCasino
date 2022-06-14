@@ -17,7 +17,7 @@ function getBalance(username, pwd) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newUserDate)
     })
-        .then(res => res.json())
+        .then(res => {return res.text()})
         .then(data => {
             localStorage.setItem("balanceLS", data);
             document.getElementById("balance").innerText = data;
@@ -27,5 +27,6 @@ function getBalance(username, pwd) {
 }
 
 function displayName(){
+    console.log("Display Name ------------------------")
     document.getElementById("nameOnMainPage").innerText = " " + _username + " ";
 }

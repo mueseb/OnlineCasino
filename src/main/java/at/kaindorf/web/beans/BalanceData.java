@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class BalanceData {
     private String name;
     private int balance;
+    private int bet;
 }

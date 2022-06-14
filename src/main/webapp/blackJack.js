@@ -29,10 +29,6 @@ let dealerHand = [];
 let card = "F01";
 let _src;
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function startGame() {
 
     let userData = {
@@ -105,11 +101,7 @@ function onHit() //draw a card
     document.getElementById("doubleBet").style.transition = "100ms";
     document.getElementById("doubleBet").onclick = "";
     fetch('./api/game/addPlayerCard')
-        .then(res => {
-            if(res.status == 200){
-                res.text();
-            }
-        })
+        .then(res => {return res.text()})
         .then(data => {
             let token = data.split(";");
             for (let i = 0; i < token.length; i++) {
@@ -117,7 +109,6 @@ function onHit() //draw a card
             }
         })
         .then(displayPlayerCards)
-        .then(checkPlayerCards)
 }
 
 function onStand(){
@@ -127,17 +118,14 @@ function onStand(){
 
 function endGame()
 {
-
     //dealer is gaming
-    fetch('./api/game/getDealerCard')
-        .then(res => {
-            if(res.status == 200){
-                res.text();
-            }
-        })
+    fetch('./api/game/addDealerCard')
+        .then(res => {return res.text()})
         .then(data => {
             let token = data.split(";");
+            dealerHand = []
             for (let i = 0; i < token.length; i++) {
+
                 dealerHand[i] = token[i];
             }
         })
@@ -145,18 +133,25 @@ function endGame()
 
     //return winner player/dealer
     fetch('./api/game/whoWon')
-        .then(res => res.text())
-        .then(data => winner=data)
-
-        if(winner = "player"){
-            updateBalance(_bets)
-        }
-        else{
-            updateBalance(-_bets)
-        }
+        .then(res => {return res.text()})
+        .then(data =>{
+            console.log(data + " won")
+            if(data === "player"){
+                updateBalance(_bets)
+            }
+            else if(data === "dealer")
+                    {
+                        updateBalance(-_bets)
+                    }
+                        else  {
+                            updateBalance(0)
+                        }
+        } )
 
     document.getElementById("mainError").innerText = "Game has ended";
 }
+
+
 
 // function checkPlayerCards() //count cards
 // {
@@ -179,10 +174,12 @@ function checkDealerCards()
 function displayPlayerCards()
 {
     let table = document.getElementById("displayPlayerCard");
-    console.log("joa")
     table.innerHTML = "";
-    for (let i = 0; i < playerHand.length; i++) {
+    let win;
+    win=playerHand[0]
+    for (let i = 1; i < playerHand.length; i++) {
         card = playerHand[i];
+        console.log("Player: " + card)
         playerSrc = "https://raw.githubusercontent.com/mueseb/OnlineCasino/stable/src/main/resources/assets/" + card + ".png"
         let td = document.createElement("td");
         let image = document.createElement("img");
@@ -195,6 +192,12 @@ function displayPlayerCards()
 
         td.append(image);
         table.append(td);
+
+    }
+    console.log("win")
+    if(win==="lose")
+    {
+        endGame()
     }
 }
 
@@ -204,7 +207,7 @@ function displayDealerCards()
     table.innerHTML = "";
     for (let i = 0; i < dealerHand.length; i++) {
         card = dealerHand[i];
-        console.log(dealerHand[i])
+        console.log("Dealer: " + dealerHand[i])
         dealerSrc = "https://raw.githubusercontent.com/mueseb/OnlineCasino/stable/src/main/resources/assets/" + card + ".png"
         let td = document.createElement("td");
         let image = document.createElement("img");
@@ -255,11 +258,13 @@ function firstBet(bet){
 }
 
 function updateBalance(newBalance) {
-    let username = document.getElementById("nameOnMainPage");
+    let username = document.getElementById("nameOnMainPage").innerText;
+    console.log(_bets)
 
     let balanceData = {
-        'username': username,
-        'balance': newBalance
+        'name': username,
+        'balance': newBalance,
+        'bet': _bets
     }
 
     fetch('./api/game', {

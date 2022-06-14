@@ -7,7 +7,6 @@ package at.kaindorf.web.resource;
 import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
-import at.kaindorf.onlinecasino.blackJack.player.Player;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
@@ -22,8 +21,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/game")
 public class CardResource {
@@ -39,6 +36,7 @@ public class CardResource {
 
     public CardResource() throws SQLException, ClassNotFoundException {
         table=Table.getInstance();
+        game=DBgame.getInstance();
     }
 
 
@@ -47,12 +45,13 @@ public class CardResource {
     public Response initGame(InitGameData initGameData)
     {
         game = new DBgame();
+        DBgame.setTableInstance(game);
         dealer = new BlackJackDealer();
         BlackJackPlayer player = new BlackJackPlayer();
         deck = new Deck();
         System.out.println("Table C: "+LocalTime.now());
         Table table = new Table(dealer,player,deck);
-        Table.setTableinstance(table);
+        Table.setTableInstance(table);
         System.out.println("TableID:" + table.getPlayerID());
         blackJack = new BlackJack();
         System.out.println("Username CR: " + initGameData.getUsername());
@@ -65,6 +64,30 @@ public class CardResource {
         game.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         return Response.ok().build();
     }
+
+
+    @Path("/whoWon")
+    @GET
+    @Produces
+    public String getWinner()
+    {
+        String winner = "tie";
+        int dealerTotal=table.getDealer().getHand().getHandTotal();
+        int playerTotal=table.getPlayer().getHand().getHandTotal();
+        if(dealerTotal>playerTotal)
+        {
+            winner = "dealer";
+
+        }
+        if(playerTotal>dealerTotal)
+        {
+            winner = "player";
+        }
+        table.setResult(winner);
+        return winner;
+
+    }
+
 
     @Path("/getPlayerStarterCards")
     @GET
@@ -89,14 +112,19 @@ public class CardResource {
     }
 
     @Path("/addDealerCard")
+    @GET
+    @Produces
     public String addDealerCard()
     {
-        table.getDealer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
+        BlackJack blackJack = new BlackJack();
+        blackJack.dealerTurn(table.getDealer(),table.getDeck());
         return getDealerCards(table.getDealer());
     }
 
 
     @Path("/addPlayerCard")
+    @GET
+    @Produces
     public String addPlayerCard()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
@@ -104,6 +132,8 @@ public class CardResource {
     }
 
     @Path("/doubleDown")
+    @GET
+    @Produces
     public String onDoubleDown()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
@@ -113,33 +143,22 @@ public class CardResource {
 
 
     @Path("stand")
+    @GET
+    @Produces
     public Response onStand()
     {
         table.getPlayer().setStand(true);
         return Response.ok().build();
     }
 
-
-    @Path("finishGame")
-    public int onEndGame()
-    {
-        //1:Player Win; 2:Dealer Win; 3:Draw
-        int num;
-        int i = blackJack.winnerCheck(table);
-        table.setResult(i);
-        saveGame();
-        return i;
-    }
-
     public void saveGame()
     {
         try {
             blackjackDB = BlackjackDB.getInstance();
-            game.setDealerHand(table.getDealer().getHand());
-            game.setPlayerHand(table.getPlayer().getHand());
+            game.setDealerHand(getDealerCards(table.getDealer()));
+            game.setPlayerHand(getPlayerCards(table.getPlayer()));
             game.setResult(table.getResult());
             game.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
-//            game.setBet();//TODO bet
             blackjackDB.saveGameStat(game);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -178,6 +197,15 @@ public class CardResource {
 
     public String getPlayerCards(BlackJackPlayer player){
         String cards="";
+        System.out.println("Total: " + table.getPlayer().getHand().getHandTotal());
+        if(table.getPlayer().getHand().getHandTotal()>21)
+        {
+            cards+="lose;";
+        }
+        else
+        {
+            cards+="win;";
+        }
         for (int i = 0; i < player.getHand().getCards().size(); i++) {
             cards+=player.getHand().getCards().get(i).getCardCode();
             if(i+1!=player.getHand().getCards().size())
@@ -188,38 +216,18 @@ public class CardResource {
         return cards;
     }
 
-
-//    public boolean updateBalance(int id,int balance) throws SQLException {
-//        if(updateUserBalance == null)
-//        {
-//            updateUserBalance = connection.prepareStatement(DB_PrepStat.updateUserBalance.sqlValue);
-//        }
-//        updateUserBalance.setInt(1,id);
-//        updateUserBalance.setInt(2,balance);
-//        int rs = updateUserBalance.executeUpdate();
-//        return rs == 1;
-//    }
-
     @PATCH
     @Consumes
     public void setPlayerBalance(BalanceData balanceData){
         try {
+            game.setBet(balanceData.getBet());
             int userID = blackjackDB.getUserIdByName(balanceData.getName());
-            blackjackDB.updateBalance(userID, balanceData.getBalance());
+            int balance = blackjackDB.getUserBalance(balanceData.getName());
+            blackjackDB.updateBalance(userID, balance+balanceData.getBalance());
+            saveGame();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Path("getPlayerCardCount")
-    public int getPlayerCardCount(){
-        BlackJackPlayer player = table.getPlayer();
-        return player.getHand().getHandTotal();
-    }
-
-    @Path("getDealerCardCount")
-    public int getDealerCardCount(){
-        BlackJackDealer dealer = table.getDealer();
-        return dealer.getHand().getHandTotal();
-    }
 }

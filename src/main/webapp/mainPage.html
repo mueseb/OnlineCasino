@@ -7,6 +7,8 @@
     <script src="login.js"></script>
     <script src="blackJack.js"></script>
     <script src="mainPageJS.js"></script>
+    <link rel="stylesheet" href="sidebar.css">
+    <script src="sidebar.js"></script>
 </head>
 <body bgcolor="black">
 <ul>
@@ -31,7 +33,7 @@
                 <td id="c2r2"></td>
                 <td id="c2r3"><input type="image"
                                      src="https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/F01.png?raw=true"
-                                     name="getCard" width="100" height="150" onclick="onHit()"></td>
+                                     name="getCard" width="100" height="150" onclick="onHit()" id="hitter"></td>
             </tr>
             <tr id="c3" style="width: auto">
                 <td id="c3r1" style="width: fit-content; height: fit-content">
@@ -86,6 +88,11 @@
     </table>
     <a id="mainError"></a>
 </div>
+
+
+
+
+
 </body>
 </html>
 

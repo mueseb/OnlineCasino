@@ -12,6 +12,7 @@
 package at.kaindorf.onlinecasino.db.DBdata;
 
 import at.kaindorf.onlinecasino.blackJack.table.Hand;
+import at.kaindorf.onlinecasino.blackJack.table.Table;
 import lombok.Data;
 import lombok.Setter;
 
@@ -25,9 +26,20 @@ public class DBgame {
     private int gameID;
     private int playerID;
     private int bet;
-    private Hand dealerHand;
-    private Hand playerHand;
+    private String dealerHand;
+    private String playerHand;
     private Timestamp startTime;
     private Timestamp endTime;
-    private int result;
+    private String result;
+
+    private static DBgame gameInstance;
+
+    public static DBgame getInstance()
+    {
+        return gameInstance;
+    }
+
+    public static void setTableInstance(DBgame dBgame) {
+        DBgame.gameInstance = dBgame;
+    }
 }

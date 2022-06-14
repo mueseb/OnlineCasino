@@ -20,10 +20,6 @@ public class DB_Database {
     private DB_CachedConnection cachedConnection;
 
     public DB_Database() throws ClassNotFoundException {
-//        DB_DRIVER = DB_Properties.getProperty("db_driver");
-//        DB_URL = DB_Properties.getProperty("db_url");
-//        DB_USER = DB_Properties.getProperty("db_user");
-//        DB_PASSWORD = DB_Properties.getProperty("db_password");
         initURL();
         Class.forName(DB_DRIVER);
     }

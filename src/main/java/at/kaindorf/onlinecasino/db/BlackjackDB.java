@@ -31,7 +31,7 @@ public class BlackjackDB extends LoginData {
 
     private PreparedStatement getUserByIDStat;
     private PreparedStatement getGamesByID;
-    private PreparedStatement getUserByName;
+    private PreparedStatement getUserIDByName;
     private PreparedStatement getUserBalance;
 
     private PreparedStatement insertUser;
@@ -60,12 +60,12 @@ public class BlackjackDB extends LoginData {
     }
 
     public int getUserIdByName(String name) throws SQLException {
-        if(getUserByName == null)
+        if(getUserIDByName == null)
         {
-            getUserByName = connection.prepareStatement(DB_PrepStat.getUserByName.sqlValue);
+            getUserIDByName = connection.prepareStatement(DB_PrepStat.getUserIDByName.sqlValue);
         }
-        getUserByName.setString(1,name);
-        ResultSet rs = getUserByName.executeQuery();
+        getUserIDByName.setString(1,name);
+        ResultSet rs = getUserIDByName.executeQuery();
         rs.next();
         System.out.println("Username: " + name);
         return rs.getInt("playerid");
@@ -155,10 +155,13 @@ public class BlackjackDB extends LoginData {
         {
             updateUserBalance = connection.prepareStatement(DB_PrepStat.updateUserBalance.sqlValue);
         }
-        updateUserBalance.setInt(1,id);
-        updateUserBalance.setInt(2,balance);
-        int rs = updateUserBalance.executeUpdate();
-        return rs == 1;
+        updateUserBalance.setInt(2,id);
+        System.out.println(id);
+        System.out.println(balance);
+        updateUserBalance.setInt(1,balance);
+        updateUserBalance.executeUpdate();
+        System.out.println("Finished updating Balance");
+        return true;
     }
 
     //TODO finishing
@@ -170,11 +173,13 @@ public class BlackjackDB extends LoginData {
         }
         saveGame.setInt(1,game.getPlayerID());
         saveGame.setInt(2,game.getBet());
-        saveGame.setString(3,game.getDealerHand().getCards().toString());
-        saveGame.setString(4,game.getPlayerHand().getCards().toString());
+        saveGame.setString(3,game.getDealerHand());
+        saveGame.setString(4,game.getPlayerHand());
         saveGame.setTimestamp(5,game.getStartTime());
         saveGame.setTimestamp(6,game.getEndTime());
-        saveGame.setInt(7,game.getResult());
+        saveGame.setString(7,game.getResult());
+        System.out.println("Finished saveGameStat");
+        saveGame.executeUpdate();
         return true;
     }
 
