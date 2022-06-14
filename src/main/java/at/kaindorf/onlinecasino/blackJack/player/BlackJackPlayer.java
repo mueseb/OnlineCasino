@@ -1,21 +1,16 @@
 /*
-    Klasse:  4BHIF 
-    @author: Sebastian Münzer
-*/
-package at.kaindorf.onlinecasino.beans;
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 06.04.2022
+ * @project-name: Online Casino
+ */
+package at.kaindorf.onlinecasino.blackJack.player;
 
-import java.util.ArrayList;
-import java.util.List;
+import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
-public class Player {
-    private Hand hand;
+public class BlackJackPlayer extends Player{
     private int turn;
     private int bet;
     private boolean stand;
-
-    public Hand getHand() {
-        return hand;
-    }
 
     public int getTurn() {
         return turn;
@@ -26,7 +21,8 @@ public class Player {
         turn++;
     }
 
-    public Player() {
+    public BlackJackPlayer() {
+        super(new Hand());
         this.turn = 1;
         this.stand = false;
     }
@@ -45,5 +41,9 @@ public class Player {
 
     public void setStand(boolean stand) {
         this.stand = stand;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }
