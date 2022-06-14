@@ -1,0 +1,26 @@
+/*
+ * @author: Sebastian Münzer & Armin Hartner
+ * @date: 24.05.2022
+ * @project-name: Online Casino
+ */
+
+.archivebg {
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp1895685.jpg&f=1&nofb=1");
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    height: 95%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.archiveContent{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 25%;
+    padding: 20px;
+}
