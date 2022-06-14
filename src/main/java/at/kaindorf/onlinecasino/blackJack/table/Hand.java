@@ -33,8 +33,8 @@ public class Hand {
         int total=0;
         int ace=0;
         for (Card card : cards) {
-            total += card.getNum();
-            if(card.getNum()==11)
+            total += card.getWorth();
+            if(card.getWorth()==11)
             {
                 ace++;
             }
@@ -42,9 +42,9 @@ public class Hand {
         if(total>21 && ace>0)
         {
             for (Card card: cards) {
-                if(card.getNum()==11)
+                if(card.getWorth()==11)
                 {
-                    card.setNum(1);
+                    card.setWorth(1);
                     ace--;
                 }
                 if(total(cards)<=21 || ace==0)
@@ -60,7 +60,7 @@ public class Hand {
     {
         int total=0;
         for (Card card : hand) {
-            total += card.getNum();
+            total += card.getWorth();
         }
         return total;
     }
@@ -85,7 +85,7 @@ public class Hand {
     public String toString() {
         String cards = "";
         for (Card card: this.cards) {
-            cards+=card.getNum()+", ";
+            cards+=card.getWorth()+", ";
         }
         cards+="\n";
         return cards;

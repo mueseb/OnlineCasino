@@ -5,7 +5,7 @@
  */
 package at.kaindorf.onlinecasino.blackJack;
 
-import at.kaindorf.onlinecasino.blackJack.player.Dealer;
+import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
@@ -20,10 +20,10 @@ public class BlackJack {
 
     public static void main(String[] args) {
 
-        Dealer dealer = new Dealer();
+        BlackJackDealer dealer = new BlackJackDealer();
         List<BlackJackPlayer> players = new ArrayList<>();
         Deck deck = new Deck();
-        System.out.println(deck.getCardDeck());
+        System.out.println(deck.getDeckInstance());
         BlackJack blackJack = new BlackJack();
         players.add(new BlackJackPlayer());
         BlackJackPlayer player = new BlackJackPlayer();
@@ -116,7 +116,7 @@ public class BlackJack {
     //DealerTurn after all Players Stand
     //Dealer hits until 17+
     //Ace counts always as 11 except on bust
-    public void dealerTurn(Dealer dealer, Deck deck)
+    public void dealerTurn(BlackJackDealer dealer, Deck deck)
     {
         System.out.println("start dealerTurn");
         while(dealer.getHand().getHandTotal()<17)
@@ -156,7 +156,7 @@ public class BlackJack {
         }
     }
 
-    public void startGame(Dealer dealer, BlackJackPlayer player, Deck deck) throws IOException {
+    public void startGame(BlackJackDealer dealer, BlackJackPlayer player, Deck deck) throws IOException {
         Table table = new Table(dealer,player,deck);
 
         System.out.println("Give starterCards");

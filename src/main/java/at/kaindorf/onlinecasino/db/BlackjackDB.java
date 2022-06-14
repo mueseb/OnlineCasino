@@ -5,11 +5,13 @@
  */
 package at.kaindorf.onlinecasino.db;
 
-import at.kaindorf.onlinecasino.blackJack.table.Table;
+import at.kaindorf.onlinecasino.db.DBdata.DBgame;
+import at.kaindorf.onlinecasino.db.DBdata.DBplayer;
 import at.kaindorf.onlinecasino.db.connection.DB_Access;
 import at.kaindorf.onlinecasino.db.connection.DB_CachedConnection;
 import at.kaindorf.onlinecasino.db.connection.DB_Database;
 import at.kaindorf.onlinecasino.db.connection.DB_PrepStat;
+import at.kaindorf.web.beans.LoginData;
 import lombok.Data;
 
 import java.sql.*;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class BlackjackDB {
+public class BlackjackDB extends LoginData {
 
     public String salt = "d8gw6b4ghlakg45w8";
 

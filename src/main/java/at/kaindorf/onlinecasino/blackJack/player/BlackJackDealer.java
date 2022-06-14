@@ -9,9 +9,9 @@ package at.kaindorf.onlinecasino.blackJack.player;
 import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
 
-public class Dealer extends Player{
+public class BlackJackDealer extends Player{
 
-    public Dealer() {
+    public BlackJackDealer() {
         super(new Hand());
     }
 }

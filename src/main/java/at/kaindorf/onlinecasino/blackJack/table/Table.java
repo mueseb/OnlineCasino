@@ -6,26 +6,23 @@
  */
 package at.kaindorf.onlinecasino.blackJack.table;
 
-import at.kaindorf.onlinecasino.blackJack.player.Dealer;
+import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
-import at.kaindorf.onlinecasino.db.DBplayer;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class Table {
     private int playerID;
     private int result;
-    private Dealer dealer;
+    private BlackJackDealer dealer;
     private BlackJackPlayer player;
     private Deck deck;
 
-    public Dealer getDealer() {
+    public BlackJackDealer getDealer() {
         return dealer;
     }
 
-    public void setDealer(Dealer dealer) {
+    public void setDealer(BlackJackDealer dealer) {
         this.dealer = dealer;
     }
 
@@ -45,7 +42,7 @@ public class Table {
         this.deck = deck;
     }
 
-    public Table(Dealer dealer, BlackJackPlayer player, Deck deck) {
+    public Table(BlackJackDealer dealer, BlackJackPlayer player, Deck deck) {
         this.dealer = dealer;
         this.player = player;
         this.deck = deck;

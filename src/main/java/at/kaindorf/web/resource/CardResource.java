@@ -7,23 +7,20 @@ package at.kaindorf.web.resource;
 
 import at.kaindorf.onlinecasino.blackJack.BlackJack;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
-import at.kaindorf.onlinecasino.blackJack.player.Dealer;
+import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
 
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
-import at.kaindorf.onlinecasino.db.DBgame;
+import at.kaindorf.onlinecasino.db.DBdata.DBgame;
 import at.kaindorf.web.beans.LoginData;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,7 @@ import java.util.List;
 @Path("/game")
 public class CardResource {
 
-    Dealer dealer;
+    BlackJackDealer dealer;
     BlackJackPlayer blackJackPlayer;
     Deck deck;
     Table table;
@@ -43,7 +40,7 @@ public class CardResource {
     public Response initGame(int id)
     {
         game = new DBgame();
-        dealer = new Dealer();
+        dealer = new BlackJackDealer();
         List<BlackJackPlayer> players = new ArrayList<>();
         BlackJackPlayer player = new BlackJackPlayer();
         players.add(new BlackJackPlayer());
@@ -140,7 +137,7 @@ public class CardResource {
         return balance;
     }
 
-    public String getDealerCards(Dealer dealer){
+    public String getDealerCards(BlackJackDealer dealer){
         String cards="?;";
         cards+=table.getPlayer().getHand().getCards().get(1);
         return cards;

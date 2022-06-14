@@ -12,7 +12,6 @@ public class BlackJackPlayer extends Player{
     private int bet;
     private boolean stand;
 
-
     public int getTurn() {
         return turn;
     }

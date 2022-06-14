@@ -6,7 +6,7 @@
 package at.kaindorf.web.resource;
 
 import at.kaindorf.onlinecasino.db.BlackjackDB;
-import at.kaindorf.onlinecasino.db.DBplayer;
+import at.kaindorf.onlinecasino.db.DBdata.DBplayer;
 import at.kaindorf.web.beans.LoginData;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -39,12 +39,22 @@ public class LoginRescource {
         return null;
     }
 
+    //checks for other chars in username
+    public boolean checkUserForIllegalChars(LoginData userData)
+    {
+        return !userData.getUsername().matches("^[a-zA-Z0-9]*$");
+    }
+
     @POST
     @Produces
-    public Response login(LoginData userData) {
+    public Response login(LoginData loginData) {
         DBplayer player;
-        player = new DBplayer(userData.getUsername(),userData.getPwd());
-        System.out.println(userData.getUsername());
+        player = new DBplayer(loginData.getUsername(),loginData.getPwd());
+        System.out.println(loginData.getUsername());
+        if(checkUserForIllegalChars(loginData))
+        {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build(); //only allows letters and numbers in the username (prevents all sql injections)
+        }
         try {
             BlackjackDB blackJackDB = BlackjackDB.getInstance();
             DBplayer userByID = blackJackDB.getUserDataByID(0);
@@ -52,7 +62,7 @@ public class LoginRescource {
             if (blackJackDB.checkIfUserExists(player.getUsrname())) {
                 if(blackJackDB.checkUserPassword(player.getUsrname(),player.getUsrpwd()))
                 {
-                    return Response.ok().header("Authorization", creatJWT(userData.getUsername())).build();
+                    return Response.ok().header("Authorization", creatJWT(loginData.getUsername())).build();
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -64,9 +74,13 @@ public class LoginRescource {
 
     @POST
     @Path("/createUser")
-    public Response creatUser(LoginData loginData) {
+    public Response creatUser(LoginData UserData) {
         DBplayer player;
-        player = new DBplayer(loginData.getUsername(),loginData.getPwd());
+        player = new DBplayer(UserData.getUsername(),UserData.getPwd());
+        if(checkUserForIllegalChars(UserData))
+        {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build(); //only allows letters and numbers in the username (prevents all sql injections)
+        }
         try {
             BlackjackDB blackJackDB = BlackjackDB.getInstance();
             if (blackJackDB.insertUser(player)) {
