@@ -75,7 +75,7 @@ function giveStarterCards()
             let token = data.split(";");
             for (let i = 0; i < token.length; i++) {
                 playerHand[i] = token[i];
-                console.log(token[i])
+                console.log("Player: "+token[i])
             }
         }).then(displayPlayerCards)
 
@@ -84,8 +84,10 @@ function giveStarterCards()
         .then(res => {return res.text()})
         .then(data => {
             let token = data.split(";");
+            dealerHand = []
             for (let i = 0; i < token.length; i++) {
                 dealerHand[i] = token[i];
+                console.log("Dealer: "+token[i])
             }
         }).then(displayDealerCards)
 }
@@ -181,14 +183,14 @@ function displayPlayerCards()
     table.innerHTML = "";
     for (let i = 0; i < playerHand.length; i++) {
         card = playerHand[i];
-        playerSrc = "https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/" + card + ".png?raw=true"
+        playerSrc = "https://raw.githubusercontent.com/mueseb/OnlineCasino/stable/src/main/resources/assets/" + card + ".png"
         let td = document.createElement("td");
         let image = document.createElement("img");
 
-        console.log(playerSrc);
-
-        console.log(playerHand[0]);
-        console.log(playerSrc);
+        // console.log(playerSrc);
+        //
+        // console.log(playerHand[0]);
+        // console.log(playerSrc);
         image.src = playerSrc;
 
         td.append(image);
@@ -202,14 +204,15 @@ function displayDealerCards()
     table.innerHTML = "";
     for (let i = 0; i < dealerHand.length; i++) {
         card = dealerHand[i];
-        dealerSrc = "https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/" + card + ".png?raw=true"
+        console.log(dealerHand[i])
+        dealerSrc = "https://raw.githubusercontent.com/mueseb/OnlineCasino/stable/src/main/resources/assets/" + card + ".png"
         let td = document.createElement("td");
         let image = document.createElement("img");
 
-        console.log(dealerSrc);
+        // console.log(dealerSrc);
 
-        console.log(dealerHand[0]);
-        console.log(dealerSrc);
+        // console.log(dealerHand[0]);
+        // console.log(dealerSrc);
         image.src = dealerSrc;
 
         td.append(image);

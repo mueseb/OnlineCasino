@@ -80,6 +80,8 @@ public class CardResource {
     }
 
     @Path("/getDealerStarterCards")
+    @GET
+    @Produces
     public String getDealerStarterCards()
     {
         table.getDealer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
@@ -163,9 +165,9 @@ public class CardResource {
 
 
     public String getDealerCards(BlackJackDealer dealer){
-        String cards="?;";
-        for (int i = 1; i < dealer.getHand().getCards().size(); i++) {
-            cards+=dealer.getHand().getCards().get(i);
+        String cards="";
+        for (int i = 0; i < dealer.getHand().getCards().size(); i++) {
+            cards+=dealer.getHand().getCards().get(i).getCardCode();
             if(i+1!=dealer.getHand().getCards().size())
             {
                 cards+=";";
