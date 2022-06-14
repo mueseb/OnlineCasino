@@ -76,7 +76,6 @@ public class BlackjackDB extends LoginData {
             getUserBalance = connection.prepareStatement(DB_PrepStat.getUserBalance.sqlValue);
         }
         getUserBalance.setString(1,name);
-        //cache.releaseStatement(getGamesByID); //TODO ?
         ResultSet rs = getUserBalance.executeQuery();
         rs.next();
         return rs.getInt("balance");
@@ -88,7 +87,6 @@ public class BlackjackDB extends LoginData {
             getUserByIDStat = connection.prepareStatement(DB_PrepStat.getUserByID.sqlValue);
         }
         getUserByIDStat.setInt(1,id);
-        //cache.releaseStatement(getGamesByID); //TODO ?
         ResultSet rs = getUserByIDStat.executeQuery();
         rs.next();
         return new DBplayer(id,rs.getString("name"),rs.getInt("balance"));
@@ -112,10 +110,6 @@ public class BlackjackDB extends LoginData {
 
     //Gets and compares player password by name | Returns false if passwords are different
     public boolean checkUserPassword(String name, String pwd) throws SQLException {
-//        if(!checkIfUserExists(name))
-//        {
-//            return false;
-//        }
         if(checkUserPassword == null)
         {
             checkUserPassword = connection.prepareStatement(DB_PrepStat.checkUserPassword.sqlValue);
@@ -164,7 +158,6 @@ public class BlackjackDB extends LoginData {
         return true;
     }
 
-    //TODO finishing
     //inserts finished game with playerID
     public boolean saveGameStat(DBgame game) throws SQLException {
         if(saveGame == null)
@@ -183,7 +176,6 @@ public class BlackjackDB extends LoginData {
         return true;
     }
 
-    //TODO finishing
     //Gets game List from player by playerID
     public List<DBgame> getGamesByUserID(int id) throws SQLException {
         if(getGamesByID == null)
@@ -195,24 +187,9 @@ public class BlackjackDB extends LoginData {
         List<DBgame> gameList = new ArrayList<>();
         while(rs.next())
         {
-            gameList.add(new DBgame()); //TODO parameters
+            gameList.add(new DBgame(rs.getInt("id"),rs.getInt("playerid"),rs.getInt("bet"),rs.getString("dealerhand"),rs.getString("playerhand"),rs.getTimestamp("starttime"),rs.getTimestamp("endtime"),rs.getString("result"))); //TODO parameters
         }
         return gameList;
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            BlackjackDB blackjackDB = getInstance();
-//            System.out.println("Connected?");
-//            //System.out.println(blackjackDB.getPlayerByID(1));
-////            blackjackDB.getUserByID2(1);
-////            Connection connection = blackjackDB.getConnection();
-////            DBplayer userByID = blackjackDB.getUserDataByID(0);
-//            System.out.println(blackjackDB.getUserBalance("admin"));
-////            connection.close();
-//            System.out.println("Closed Connection");
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

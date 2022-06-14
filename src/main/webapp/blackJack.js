@@ -27,7 +27,6 @@ let playerHand = [];
 let dealerHand = [];
 
 let card = "F01";
-let _src;
 
 function startGame() {
 
@@ -151,26 +150,6 @@ function endGame()
     document.getElementById("mainError").innerText = "Game has ended";
 }
 
-
-
-// function checkPlayerCards() //count cards
-// {
-//     fetch('./api/game/getPlayerCardCount')
-//         .then(res => res.text())
-//         .then(data => {
-//             document.getElementById("cardCount").innerText = data;
-//         })
-// }
-
-function checkDealerCards()
-{
-    fetch('./api/game/getDealerCardCount')
-        .then(res => res.text())
-        .then(data => {
-            document.getElementById("dealerCardCount").innerText = data;
-        })
-}
-
 function displayPlayerCards()
 {
     let table = document.getElementById("displayPlayerCard");
@@ -183,11 +162,6 @@ function displayPlayerCards()
         playerSrc = "https://raw.githubusercontent.com/mueseb/OnlineCasino/stable/src/main/resources/assets/" + card + ".png"
         let td = document.createElement("td");
         let image = document.createElement("img");
-
-        // console.log(playerSrc);
-        //
-        // console.log(playerHand[0]);
-        // console.log(playerSrc);
         image.src = playerSrc;
 
         td.append(image);
@@ -195,7 +169,7 @@ function displayPlayerCards()
 
     }
     console.log("win")
-    if(win==="lose")
+    if(win==="los")
     {
         endGame()
     }
@@ -222,20 +196,6 @@ function displayDealerCards()
         table.append(td);
     }
 }
-
-
-
-
-//getplayercards(num)
-//getdealercards(num)
-//getplayerbalance info
-//startgame send bet ->getplayercards -> getdealercards
-//
-
-//stand -> getWinner
-//hit -> getPlayerCards /-> dealerWin
-
-//getWinner -> dealerTurn -> getalldealerCards -> CardCount //savesStats ->write to database -> getplayerbalance
 
 
 function firstBet(bet){

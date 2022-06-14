@@ -9,7 +9,7 @@ import at.kaindorf.onlinecasino.blackJack.table.Hand;
 
 
 //Generic Player
-public class Player {
+public abstract class Player {
     private Hand hand;
     private boolean canWin;
 

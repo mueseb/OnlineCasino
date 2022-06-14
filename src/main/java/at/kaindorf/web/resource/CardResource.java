@@ -17,6 +17,7 @@ import at.kaindorf.web.beans.LoginData;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -31,7 +32,6 @@ public class CardResource {
     BlackJack blackJack;
     BlackjackDB blackjackDB = BlackjackDB.getInstance();
     DBgame game;
-
     Table table;
 
     public CardResource() throws SQLException, ClassNotFoundException {
@@ -156,7 +156,7 @@ public class CardResource {
         try {
             blackjackDB = BlackjackDB.getInstance();
             game.setDealerHand(getDealerCards(table.getDealer()));
-            game.setPlayerHand(getPlayerCards(table.getPlayer()));
+            game.setPlayerHand(getPlayerCards(table.getPlayer()).substring(4));
             game.setResult(table.getResult());
             game.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
             blackjackDB.saveGameStat(game);
@@ -200,7 +200,7 @@ public class CardResource {
         System.out.println("Total: " + table.getPlayer().getHand().getHandTotal());
         if(table.getPlayer().getHand().getHandTotal()>21)
         {
-            cards+="lose;";
+            cards+="los;";
         }
         else
         {

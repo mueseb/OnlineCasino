@@ -13,15 +13,18 @@ package at.kaindorf.onlinecasino.db.DBdata;
 
 import at.kaindorf.onlinecasino.blackJack.table.Hand;
 import at.kaindorf.onlinecasino.blackJack.table.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-//TODO rework
 @Data
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DBgame {
     private int gameID;
     private int playerID;
