@@ -59,6 +59,17 @@ public class BlackjackDB extends LoginData {
         return theInstance;
     }
 
+    public int getUserIdByName(String name) throws SQLException {
+        if(getUserByName == null)
+        {
+            getUserByName = connection.prepareStatement(DB_PrepStat.getUserByName.sqlValue);
+        }
+        getUserByName.setString(1,name);
+        ResultSet rs = getUserByName.executeQuery();
+        rs.next();
+        return rs.getInt("playerid");
+    }
+
     public int getUserBalance(String name) throws SQLException {
         if (getUserBalance == null) {
             getUserBalance = connection.prepareStatement(DB_PrepStat.getUserBalance.sqlValue);

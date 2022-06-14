@@ -4,37 +4,88 @@
     <meta charset="UTF-8">
     <title>Online Casino | Main</title>
     <link rel="stylesheet" href="mainPageCSS.css">
+    <script src="login.js"></script>
+    <script src="blackJack.js"></script>
     <script src="mainPageJS.js"></script>
 </head>
-<body>
+<body bgcolor="black">
 <ul>
     <li class="navBar"><a href="mainPage.html">Home</a></li>
-    <li class="navBar" style="float: right"><a href="login.html">User</a></li>
-    <li><label for="balance" style="float: right">Balance:</label>
-        <a id="balance" style="float: right">100</a></li>
+    <li id="balance" class="navBar" style="float: right; color: white"></li>
+    <li><label for="balance" style="float: right; color: white">Balance:</label>
+        <a id="nameOnMainPage" style="float: right; color: white"></a></li>
 </ul>
+<div class="bg"></div>
+<div class="mainContent" style="width: auto; height: auto">
+    <div hidden id="gameTable" style="width: available; height: auto; align-content: center">
+        <table style="width: 100%; height: 250%">
+            <tr id="c1" style="width: 50%">
+                <td id="c1r1" style="width: 10%"></td>
+                <td id="c1r2"> <table id="displayDealerCard">
+                    <!--                        <td><img src="https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/F01.png?raw=true"></td>-->
+                </table></td>
+                <td id="c1r3"></td>
+            </tr>
+            <tr id="c2" style="width: 50%">
+                <td id="c2r1" style="width: 10%"></td>
+                <td id="c2r2"></td>
+                <td id="c2r3"><input type="image"
+                                     src="https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/F01.png?raw=true"
+                                     name="getCard" width="100" height="150" onclick="onHit()"></td>
+            </tr>
+            <tr id="c3" style="width: auto">
+                <td id="c3r1" style="width: fit-content; height: fit-content">
+                    <div class="textClass" style="width: fit-content">
+                        <h1 id="cardCount" style="font-size: medium; color: #ec2e3d">Card-Points: </h1>
+                        <h1 id="dealerCardCount" style="font-size: medium; color: #ec2e3d">
+                            Dealer-Card-Points: </h1>
+                        <h1 id="betText" style="font-size: medium;  color: #ec2e3d">Your bets: </h1>
+                    </div>
+                </td>
+                <td id="c3r2">
+                    <table id="displayPlayerCard">
+<!--                        <td><img src="https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/F01.png?raw=true"></td>-->
+                    </table>
+                </td>
+                <td id="c3r3">
+                    <table style="width: 25%; height: 50%">
+                        <tr>
+                            <td>
+                                <input type="image" name="doubleBet"
+                                       src="https://github.com/mueseb/OnlineCasino/blob/stable/src/main/resources/assets/Chip.png?raw=true"
+                                       width="100" height="100" onclick="onDoubleDown()" id="doubleBet">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="neon-button" id="neon-buttonEND">
+                                    <a onclick="endGame()" id="endGameButton">Stand</a>
+                                </div>
+                            </td>
+                        </tr>
 
-<div class="mainPageContent">
-    <div class="flex-container">
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <button>Bet</button>
-                    </td>
-                    <td>
-                        <button>Get card</button>
-                    </td>
-                    <td>
-                        <button>End game</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <h1 id="cardCount" style="font-size: small">Card-Points: </h1>
-        </div>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </div>
+
+
+    <table id="firstBetTable">
+        <tr>
+            <td>
+                <lable for="bet" style="color: white">Bet:</lable>
+                <input type="number" id="bet">
+            </td>
+            <td>
+                <div class="neon-buttonBET">
+                    <a onclick="firstBet(bet.value)">Set bet</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <a id="mainError"></a>
 </div>
 </body>
 </html>
+

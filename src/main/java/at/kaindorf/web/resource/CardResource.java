@@ -1,22 +1,20 @@
 /*
-    @author: Sebastian Münzer & Armin Hartner
-    @date: 29.04.2022
-    @project-name: Online Casino
+    Klasse:  4BHIF
+    @author: Sebastian Münzer
 */
 package at.kaindorf.web.resource;
 
 import at.kaindorf.onlinecasino.blackJack.BlackJack;
-import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.player.BlackJackDealer;
+import at.kaindorf.onlinecasino.blackJack.player.BlackJackPlayer;
 import at.kaindorf.onlinecasino.blackJack.table.Deck;
-
 import at.kaindorf.onlinecasino.blackJack.table.Table;
 import at.kaindorf.onlinecasino.db.BlackjackDB;
 import at.kaindorf.onlinecasino.db.DBdata.DBgame;
+import at.kaindorf.web.beans.BalanceData;
+import at.kaindorf.web.beans.InitGameData;
 import at.kaindorf.web.beans.LoginData;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.SQLException;
@@ -29,15 +27,20 @@ import java.util.List;
 public class CardResource {
 
     BlackJackDealer dealer;
-    BlackJackPlayer blackJackPlayer;
+    BlackJackPlayer player;
     Deck deck;
     Table table;
     BlackJack blackJack;
-    BlackjackDB blackjackDB;
+    BlackjackDB blackjackDB = BlackjackDB.getInstance();
     DBgame game;
 
+    public CardResource() throws SQLException, ClassNotFoundException {
+    }
 
-    public Response initGame(int id)
+
+    @Path("/initGame")
+    @POST
+    public Response initGame(InitGameData initGameData)
     {
         game = new DBgame();
         dealer = new BlackJackDealer();
@@ -47,26 +50,31 @@ public class CardResource {
         deck = new Deck();
         table = new Table(dealer,player,deck);
         blackJack = new BlackJack();
-        table.setPlayerID(id);
+        try {
+            table.setPlayerID(blackjackDB.getUserIdByName(initGameData.getName()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        game.setPlayerID(table.getPlayerID());
         game.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         return Response.ok().build();
     }
 
-
+    @Path("/getPlayerStarterCards")
     public String getPlayerStarterCards()
     {
         table.getPlayer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         return getPlayerCards(table.getPlayer());
     }
 
-
+    @Path("/getDealerStarterCards")
     public String getDealerStarterCards()
     {
         table.getDealer().getHand().addCardsToHand(table.getDeck().getCardsFromDeck(2));
         return getDealerCards(table.getDealer());
     }
 
-
+    @Path("/addDealerCard")
     public String addDealerCard()
     {
         table.getDealer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
@@ -74,13 +82,14 @@ public class CardResource {
     }
 
 
+    @Path("/addPlayerCard")
     public String addPlayerCard()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
         return getPlayerCards(table.getPlayer());
     }
 
-
+    @Path("/doubleDown")
     public String onDoubleDown()
     {
         table.getPlayer().getHand().addCardToHand(table.getDeck().getCardFromDeck());
@@ -89,6 +98,7 @@ public class CardResource {
     }
 
 
+    @Path("stand")
     public Response onStand()
     {
         table.getPlayer().setStand(true);
@@ -96,12 +106,14 @@ public class CardResource {
     }
 
 
+    @Path("finishGame")
     public int onEndGame()
     {
         //1:Player Win; 2:Dealer Win; 3:Draw
         int num;
         int i = blackJack.winnerCheck(table);
         table.setResult(i);
+        saveGame();
         return i;
     }
 
@@ -137,17 +149,61 @@ public class CardResource {
         return balance;
     }
 
+
     public String getDealerCards(BlackJackDealer dealer){
         String cards="?;";
-        cards+=table.getPlayer().getHand().getCards().get(1);
+        for (int i = 1; i < dealer.getHand().getCards().size(); i++) {
+            cards+=dealer.getHand().getCards().get(i);
+            if(i+1!=dealer.getHand().getCards().size())
+            {
+                cards+=";";
+            }
+        }
         return cards;
     }
 
     public String getPlayerCards(BlackJackPlayer player){
         String cards="";
-        cards+=table.getPlayer().getHand().getCards().get(0);
-        cards+=";";
-        cards+=table.getPlayer().getHand().getCards().get(1);
+        for (int i = 0; i < player.getHand().getCards().size(); i++) {
+            cards+=player.getHand().getCards().get(i);
+            if(i+1!=player.getHand().getCards().size())
+            {
+                cards+=";";
+            }
+        }
         return cards;
+    }
+
+
+//    public boolean updateBalance(int id,int balance) throws SQLException {
+//        if(updateUserBalance == null)
+//        {
+//            updateUserBalance = connection.prepareStatement(DB_PrepStat.updateUserBalance.sqlValue);
+//        }
+//        updateUserBalance.setInt(1,id);
+//        updateUserBalance.setInt(2,balance);
+//        int rs = updateUserBalance.executeUpdate();
+//        return rs == 1;
+//    }
+
+    @PATCH
+    @Consumes
+    public void setPlayerBalance(BalanceData balanceData){
+        try {
+            int userID = blackjackDB.getUserIdByName(balanceData.getName());
+            blackjackDB.updateBalance(userID, balanceData.getBalance());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Path("getPlayerCardCount")
+    public int getPlayerCardCount(){
+        return player.getHand().getHandTotal();
+    }
+
+    @Path("getDealerCardCount")
+    public int getDealerCardCount(){
+        return dealer.getHand().getHandTotal();
     }
 }
