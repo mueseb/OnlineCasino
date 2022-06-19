@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Casino | Login</title>
+    <script src="login.js"></script>
+    <link rel="stylesheet" href="loginStyle.css">
+    <!--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
+    <link rel="stylesheet" href="mainPageCSS.css">
+</head>
+
+<body bgcolor="#ff1493">
+<div class="creatUserBG"></div>
+<div class="creatUserContent">
+    <div class="flex-container">
+        <div>
+            <table>
+                <th style="font-size: x-large; color: white">Ｌｏｇｉｎ　運ル安</th>
+                <tr>
+                    <td>
+                        <div class="inputLogin">
+                            <input id="userInput" type="text" placeholder="ｕｓｅｒｎａｍｅ" style="font-size: small">
+                            <input id="pwdInput" type="password" placeholder="ｐａｓｓｗｏｒｄ" style="font-size: small">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="loginButton" onclick="login(userInput.value, pwdInput.value)" style="color: white">Login</button>
+                        <button class="loginButton" onclick="checkInput(userInput.value, pwdInput.value)" style="color: white">Creat new
+                            user
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h1 id="errorText" class="glow"></h1>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
