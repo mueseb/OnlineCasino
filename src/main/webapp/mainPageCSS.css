@@ -1,0 +1,274 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.bbg{
+    background: black;
+}
+.bg {
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp1895685.jpg&f=1&nofb=1");
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    height: 95%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    /*filter: blur(8px);*/
+    /*-webkit-filter: blur(8px);*/
+    /*height: 100%;*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}
+
+.mainContent {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 25%;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: -webkit-sticky; /* Safari */
+    position: static;
+    top: 0;
+}
+
+.navBar {
+    float: left;
+}
+
+.navBar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navBar a:hover {
+    background-color: violet;
+}
+
+.active {
+    background-color: blueviolet;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    height: 600px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.flex-container > div {
+    width: 300px;
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px;
+    text-align: left;
+}
+
+h1 {
+    color: white;
+}
+
+:root {
+    --clr-neon: hsl(317 100% 54%);
+    --clr-bg: hsl(323 21% 16%);
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+
+.neon-button {
+    width: 95px;
+    height: 35px;
+    font-size: 18px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--clr-neon);
+    border: var(--clr-neon) 0.125em solid;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.5), 0 0 0.45em currentColor;
+
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+
+    position: relative;
+
+    transition: background-color 100ms linear;
+}
+
+.neon-button::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: var(--clr-neon);
+    top: 120%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em);
+    opacity: 0.7;
+
+}
+.neon-button::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 2em 0.5em var(--clr-neon);
+    background-color: var(--clr-neon);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 100ms linear ;
+}
+.neon-button:hover,
+.neon-button:focus{
+    background: var(--clr-neon);
+    color: var(--clr-bg);
+    text-shadow: none;
+}
+.neon-button:hover::before,
+.neon-button:focus::before{
+    opacity: 1;
+}
+.neon-button:hover::after,
+neon-button:focus::after{
+    opacity: 1;
+}
+
+/*img {*/
+/*    width: 100%;*/
+/*    height: 150%;*/
+/*}*/
+
+
+/*.glow {*/
+/*    font-size: 15px;*/
+/*    color: #fff;*/
+/*    text-align: center;*/
+/*    -webkit-animation: glow 1s ease-in-out infinite alternate;*/
+/*    -moz-animation: glow 1s ease-in-out infinite alternate;*/
+/*    animation: glow 1s ease-in-out infinite alternate;*/
+/*}*/
+
+/*@-webkit-keyframes glow {*/
+/*    from {*/
+/*        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 20px #39f305, 0 0 30px #3de600, 0 0 40px #F30505, 0 0 50px #F30505, 0 0 60px #F30505;*/
+/*    }*/
+/*    to {*/
+/*        text-shadow: 0 0 10px #fff, 0 0 30px #eccc2e, 0 0 30px #ecaa2e, 0 0 50px #ecc02e, 0 0 50px #ec2e3d, 0 0 60px #ec2e3d, 0 0 70px #ec2e3d;*/
+/*    }*/
+/*}*/
+
+.neon-buttonBET {
+    width: 100px; /*100*/
+    height: 35px; /*80*/
+    font-size: 18px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--clr-neon);
+    border: var(--clr-neon) 0.125em solid;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.5), 0 0 0.45em currentColor;
+
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+
+    position: relative;
+
+    transition: background-color 100ms linear;
+}
+
+.neon-buttonBET::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: var(--clr-neon);
+    top: 120%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em);
+    opacity: 0.7;
+
+}
+.neon-buttonBET::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 2em 0.5em var(--clr-neon);
+    background-color: var(--clr-neon);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 100ms linear ;
+}
+.neon-buttonBET:hover,
+.neon-buttonBET:focus{
+    background: var(--clr-neon);
+    color: var(--clr-bg);
+    text-shadow: none;
+}
+.neon-buttonBET:hover::before,
+.neon-buttonBET:focus::before{
+    opacity: 1;
+}
+.neon-buttonBET:hover::after,
+neon-buttonBET:focus::after{
+    opacity: 1;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+
+#overlayText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
